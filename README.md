@@ -1,6 +1,6 @@
 # testList
 
-Built in React-Native. 
+Created in React-Native. The application receives data from an API and displays it in a list. Clicking on the url takes the user to the browser.
 
 ## Demo
 
@@ -16,6 +16,6 @@ Data sorted by Author:
 
 ![Data sorted by Author](./screenshots/sortedByAuthor.png)
 
-Acitivty indicator:
+Activity indicator:
 
 ![Activity indicator](./screenshots/indicator.png)
