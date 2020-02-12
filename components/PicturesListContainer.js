@@ -36,10 +36,34 @@ class PicturesListContainer extends Component {
       });
   };
 
+  sortDataByAuthor = () => {
+    this.setState({
+      data: this.state.data.sort(this.compareAuthors),
+    });
+  };
+
+  sortDataById = () => {
+    this.setState({
+      data: this.state.data.sort(this.compareIds),
+    });
+  };
+
+  compareIds = (first, second) => first.id - second.id;
+
+  compareAuthors = (first, second) => {
+    if (first.author > second.author) {
+      return 1;
+    } else {
+      return -1;
+    }
+  };
+
   render() {
     return (
       <PicturesListComponent
         fetchData={this.fetchData}
+        sortDataByAuthor={this.sortDataByAuthor}
+        sortDataById={this.sortDataById}
         data={this.state.data}
         isLoading={this.state.isLoading}
       />
