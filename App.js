@@ -1,12 +1,8 @@
 import React from 'react';
-import {Text} from 'react-native';
+import PicturesListContainer from './components/PicturesListContainer';
 
 const App: () => React$Node = () => {
-  return (
-    <>
-      <Text>Init</Text>
-    </>
-  );
+  return <PicturesListContainer />;
 };
 
 export default App;
