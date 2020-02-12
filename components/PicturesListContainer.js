@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PicturesListComponent from './PicturesListComponent';
 
 class PicturesListContainer extends Component {
   constructor(props) {
@@ -37,8 +38,11 @@ class PicturesListContainer extends Component {
 
   render() {
     return (
-      <>
-      </>
+      <PicturesListComponent
+        fetchData={this.fetchData}
+        data={this.state.data}
+        isLoading={this.state.isLoading}
+      />
     );
   }
 }
