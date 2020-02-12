@@ -12,7 +12,7 @@ Data sorted by ID:
 
 ![Data sorted by ID](./screenshots/sortedById.png)
 
-Data sorted by ID:
+Data sorted by Author:
 
 ![Data sorted by Author](./screenshots/sortedByAuthor.png)
 
