@@ -72,6 +72,7 @@ const styles = StyleSheet.create({
   },
   website: {
     fontSize: 13,
+    color: '#606060',
   },
 });
 
