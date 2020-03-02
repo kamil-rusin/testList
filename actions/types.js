@@ -1,3 +1,3 @@
-export const REFRESH_LIST = 'REFRESH_LIST';
-export const SORT_BY_AUTHOR = 'SORT_BY_AUTHOR';
-export const SORT_BY_ID = 'SORT_BY_ID';
+export const IS_FETCHING = 'IS_FETCHING';
+export const UPDATE_LIST = 'UPDATE_LIST';
+export const SET_ERROR = 'SET_ERROR';
