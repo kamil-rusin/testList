@@ -6,23 +6,20 @@ import {Button} from 'react-native-elements';
 const PicturesListComponent = props => {
   const {isLoading, data, fetchData, sortDataByAuthor, sortDataById} = props;
 
-  const renderItem = ({item}) => <PictureItemComponent item={item} />;
-
   return (
     <>
-      {isLoading && (
-        <View style={styles.indicatorContainer}>
-          <ActivityIndicator size="large" color="dodgerblue" animating />
-        </View>
-      )}
-
-      {!isLoading && (
-        <FlatList
+      {isLoading === true
+        ?
+        (<View style={styles.indicatorContainer}>
+            <ActivityIndicator size="large" color="dodgerblue" animating />
+          </View>)
+        :
+        (<FlatList
           data={data}
-          renderItem={renderItem}
+          renderItem={({ item }) => (<PictureItemComponent item={item}/>)}
           keyExtractor={item => item.id}
-        />
-      )}
+        />)
+      }
 
       <View style={styles.footer}>
         <View style={styles.buttonContainer}>
