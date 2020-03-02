@@ -1,12 +1,11 @@
 import React from 'react';
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {Image, Linking, StyleSheet, Text, View} from 'react-native';
 import {Badge} from 'react-native-elements';
-import NativeLinking from 'react-native/Libraries/Linking/NativeLinking';
 
 const PictureItemComponent = props => {
   const loadInBrowser = () => {
-    NativeLinking.openURL(props.item.url).catch(err =>
-      console.error("Couldn't load page", err),
+    Linking.openURL(props.item.url).catch(err =>
+        console.error("Couldn't load page", err),
     );
   };
 
