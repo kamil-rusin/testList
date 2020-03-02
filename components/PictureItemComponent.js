@@ -1,29 +1,24 @@
 import React from 'react';
 import {Image, StyleSheet, Text, View} from 'react-native';
 import {Badge} from 'react-native-elements';
-import NativeLinking from 'react-native/Libraries/Linking/NativeLinking';
 
 const PictureItemComponent = props => {
-  const loadInBrowser = () => {
-    NativeLinking.openURL(props.item.url).catch(err =>
-      console.error("Couldn't load page", err),
-    );
-  };
+  const {loadInBrowser, item} = props;
 
   return (
     <View style={styles.listItem}>
-      <Image style={styles.image} source={{uri: props.item.download_url}} />
+      <Image style={styles.image} source={{uri: item.download_url}} />
       <View style={styles.detailsContainer}>
         <View style={styles.row}>
-          <Text style={styles.author}>{props.item.author}</Text>
+          <Text style={styles.author}>{item.author}</Text>
           <Badge
             containerStyle={styles.badge}
             badgeStyle={styles.badgeStyle}
-            value={props.item.id}
+            value={item.id}
           />
         </View>
-        <Text onPress={loadInBrowser} style={styles.website}>
-          Url: {props.item.url}
+        <Text onPress={() => loadInBrowser(item.url)} style={styles.website}>
+          Url: {item.url}
         </Text>
       </View>
     </View>

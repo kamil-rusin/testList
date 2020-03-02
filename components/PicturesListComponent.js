@@ -1,54 +1,33 @@
 import React from 'react';
-import {FlatList, ActivityIndicator, StyleSheet, View} from 'react-native';
+import {FlatList, ActivityIndicator, StyleSheet, View, TouchableOpacity, Text} from 'react-native';
 import PictureItemComponent from './PictureItemComponent';
-import {Button} from 'react-native-elements';
 
 const PicturesListComponent = props => {
-  const {isLoading, data, fetchData, sortDataByAuthor, sortDataById} = props;
-
-  const renderItem = ({item}) => <PictureItemComponent item={item} />;
+  const {isLoading, data, fetchData, sortDataByAuthor, sortDataById, loadInBrowser} = props;
 
   return (
     <>
-      {isLoading && (
-        <View style={styles.indicatorContainer}>
-          <ActivityIndicator size="large" color="dodgerblue" animating />
-        </View>
-      )}
-
-      {!isLoading && (
-        <FlatList
+      {isLoading
+        ?
+        (<ActivityIndicator style={styles.indicatorContainer} size="large" color="dodgerblue" animating/>)
+        :
+        (<FlatList
           data={data}
-          renderItem={renderItem}
+          renderItem={({item}) => (<PictureItemComponent loadInBrowser={loadInBrowser} item={item}/>)}
           keyExtractor={item => item.id}
-        />
-      )}
+        />)
+      }
 
       <View style={styles.footer}>
-        <View style={styles.buttonContainer}>
-          <Button
-            buttonStyle={styles.button}
-            titleStyle={styles.buttonTitle}
-            title="Refresh"
-            onPress={fetchData}
-          />
-        </View>
-        <View style={styles.buttonContainer}>
-          <Button
-            buttonStyle={styles.button}
-            titleStyle={styles.buttonTitle}
-            title="Sort by author"
-            onPress={sortDataByAuthor}
-          />
-        </View>
-        <View style={styles.buttonContainer}>
-          <Button
-            buttonStyle={styles.button}
-            titleStyle={styles.buttonTitle}
-            title="Sort by id"
-            onPress={sortDataById}
-          />
-        </View>
+        <TouchableOpacity style={styles.buttonContainer} onPress={fetchData}>
+          <Text style={styles.buttonTitle}>REFRESH</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.buttonContainer} onPress={sortDataByAuthor}>
+          <Text style={styles.buttonTitle}>SORT BY AUTHOR</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.buttonContainer} onPress={sortDataById}>
+          <Text style={styles.buttonTitle}>SORT BY ID</Text>
+        </TouchableOpacity>
       </View>
     </>
   );
@@ -62,7 +41,7 @@ const styles = StyleSheet.create({
   },
   footer: {
     borderTopWidth: 1,
-    borderTopColor: '#1d548b',
+    borderTopColor: '#1e89de',
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-evenly',
@@ -72,12 +51,15 @@ const styles = StyleSheet.create({
   buttonContainer: {
     margin: 4,
     width: '30%',
-  },
-  button: {
+    backgroundColor: '#1e89de',
     borderRadius: 7,
+    height: '80%',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   buttonTitle: {
     fontSize: 13,
+    color: 'white',
   },
 });
 
