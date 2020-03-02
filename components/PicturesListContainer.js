@@ -40,11 +40,7 @@ class PicturesListContainer extends Component {
   sortDataByAuthor = () => {
     this.setState({
       data: this.state.data.sort((first, second) => {
-        if (first.author > second.author) {
-          return 1;
-        } else {
-          return -1;
-        }
+        return (first.author > second.author) ? 1 : -1;
       }),
     });
   };
@@ -57,7 +53,7 @@ class PicturesListContainer extends Component {
 
   loadInBrowser = (url) => {
     Linking.openURL(url).catch(err =>
-      console.error("Couldn't load page", err),
+      console.error('Couldn\'t load page', err),
     );
   };
 

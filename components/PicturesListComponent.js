@@ -7,34 +7,26 @@ const PicturesListComponent = props => {
 
   return (
     <>
-      {isLoading === true
+      {isLoading
         ?
-        (<View style={styles.indicatorContainer}>
-            <ActivityIndicator size="large" color="dodgerblue" animating />
-          </View>)
+        (<ActivityIndicator style={styles.indicatorContainer} size="large" color="dodgerblue" animating/>)
         :
         (<FlatList
           data={data}
-          renderItem={({ item }) => (<PictureItemComponent loadInBrowser={loadInBrowser} item={item}/>)}
+          renderItem={({item}) => (<PictureItemComponent loadInBrowser={loadInBrowser} item={item}/>)}
           keyExtractor={item => item.id}
         />)
       }
 
       <View style={styles.footer}>
         <TouchableOpacity style={styles.buttonContainer} onPress={fetchData}>
-          <View>
-            <Text style={styles.buttonTitle}>REFRESH</Text>
-          </View>
+          <Text style={styles.buttonTitle}>REFRESH</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.buttonContainer} onPress={sortDataByAuthor}>
-          <View>
-            <Text style={styles.buttonTitle}>SORT BY AUTHOR</Text>
-          </View>
+          <Text style={styles.buttonTitle}>SORT BY AUTHOR</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.buttonContainer} onPress={sortDataById}>
-          <View>
-            <Text style={styles.buttonTitle}>SORT BY ID</Text>
-          </View>
+          <Text style={styles.buttonTitle}>SORT BY ID</Text>
         </TouchableOpacity>
       </View>
     </>
