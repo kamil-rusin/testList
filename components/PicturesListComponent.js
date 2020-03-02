@@ -1,7 +1,6 @@
 import React from 'react';
-import {FlatList, ActivityIndicator, StyleSheet, View} from 'react-native';
+import {FlatList, ActivityIndicator, StyleSheet, View, TouchableOpacity, Text} from 'react-native';
 import PictureItemComponent from './PictureItemComponent';
-import {Button} from 'react-native-elements';
 
 const PicturesListComponent = props => {
   const {isLoading, data, fetchData, sortDataByAuthor, sortDataById, loadInBrowser} = props;
@@ -22,30 +21,21 @@ const PicturesListComponent = props => {
       }
 
       <View style={styles.footer}>
-        <View style={styles.buttonContainer}>
-          <Button
-            buttonStyle={styles.button}
-            titleStyle={styles.buttonTitle}
-            title="Refresh"
-            onPress={fetchData}
-          />
-        </View>
-        <View style={styles.buttonContainer}>
-          <Button
-            buttonStyle={styles.button}
-            titleStyle={styles.buttonTitle}
-            title="Sort by author"
-            onPress={sortDataByAuthor}
-          />
-        </View>
-        <View style={styles.buttonContainer}>
-          <Button
-            buttonStyle={styles.button}
-            titleStyle={styles.buttonTitle}
-            title="Sort by id"
-            onPress={sortDataById}
-          />
-        </View>
+        <TouchableOpacity style={styles.buttonContainer} onPress={fetchData}>
+          <View>
+            <Text style={styles.buttonTitle}>REFRESH</Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.buttonContainer} onPress={sortDataByAuthor}>
+          <View>
+            <Text style={styles.buttonTitle}>SORT BY AUTHOR</Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.buttonContainer} onPress={sortDataById}>
+          <View>
+            <Text style={styles.buttonTitle}>SORT BY ID</Text>
+          </View>
+        </TouchableOpacity>
       </View>
     </>
   );
@@ -59,7 +49,7 @@ const styles = StyleSheet.create({
   },
   footer: {
     borderTopWidth: 1,
-    borderTopColor: '#1d548b',
+    borderTopColor: '#1e89de',
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-evenly',
@@ -69,12 +59,15 @@ const styles = StyleSheet.create({
   buttonContainer: {
     margin: 4,
     width: '30%',
-  },
-  button: {
+    backgroundColor: '#1e89de',
     borderRadius: 7,
+    height: '80%',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   buttonTitle: {
     fontSize: 13,
+    color: 'white',
   },
 });
 
