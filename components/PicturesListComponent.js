@@ -4,7 +4,7 @@ import PictureItemComponent from './PictureItemComponent';
 import {Button} from 'react-native-elements';
 
 const PicturesListComponent = props => {
-  const {isLoading, data, fetchData, sortDataByAuthor, sortDataById} = props;
+  const {isLoading, data, fetchData, sortDataByAuthor, sortDataById, loadInBrowser} = props;
 
   return (
     <>
@@ -16,7 +16,7 @@ const PicturesListComponent = props => {
         :
         (<FlatList
           data={data}
-          renderItem={({ item }) => (<PictureItemComponent item={item}/>)}
+          renderItem={({ item }) => (<PictureItemComponent loadInBrowser={loadInBrowser} item={item}/>)}
           keyExtractor={item => item.id}
         />)
       }

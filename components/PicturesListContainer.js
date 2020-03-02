@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import PicturesListComponent from './PicturesListComponent';
+import {Linking} from 'react-native';
 
 class PicturesListContainer extends Component {
   constructor(props) {
@@ -58,6 +59,12 @@ class PicturesListContainer extends Component {
     }
   };
 
+  loadInBrowser = (url) => {
+    Linking.openURL(url).catch(err =>
+      console.error("Couldn't load page", err),
+    );
+  };
+
   render() {
     return (
       <PicturesListComponent
@@ -66,6 +73,7 @@ class PicturesListContainer extends Component {
         sortDataById={this.sortDataById}
         data={this.state.data}
         isLoading={this.state.isLoading}
+        loadInBrowser={this.loadInBrowser}
       />
     );
   }
