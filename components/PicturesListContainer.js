@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import PicturesListComponent from './PicturesListComponent';
+import {Linking} from 'react-native';
 
 class PicturesListContainer extends Component {
   constructor(props) {
@@ -38,24 +39,22 @@ class PicturesListContainer extends Component {
 
   sortDataByAuthor = () => {
     this.setState({
-      data: this.state.data.sort(this.compareAuthors),
+      data: this.state.data.sort((first, second) => {
+        return (first.author > second.author) ? 1 : -1;
+      }),
     });
   };
 
   sortDataById = () => {
     this.setState({
-      data: this.state.data.sort(this.compareIds),
+      data: this.state.data.sort((first, second) => first.id - second.id),
     });
   };
 
-  compareIds = (first, second) => first.id - second.id;
-
-  compareAuthors = (first, second) => {
-    if (first.author > second.author) {
-      return 1;
-    } else {
-      return -1;
-    }
+  loadInBrowser = (url) => {
+    Linking.openURL(url).catch(err =>
+      console.error('Couldn\'t load page', err),
+    );
   };
 
   render() {
@@ -66,6 +65,7 @@ class PicturesListContainer extends Component {
         sortDataById={this.sortDataById}
         data={this.state.data}
         isLoading={this.state.isLoading}
+        loadInBrowser={this.loadInBrowser}
       />
     );
   }
