@@ -1,26 +1,28 @@
-import {IS_FETCHING, UPDATE_LIST, SET_ERROR} from '../actions/types';
+import {FETCH_DATA_ERROR, FETCH_DATA_SUCCESS, FETCH_DATA_PENDING} from '../actions/types';
 
 const initialState = {
-  isFetching: false,
+  pending: false,
   data: [],
   error: null,
 };
 
 const listReducer = (state = initialState, action) => {
   switch (action.type) {
-    case IS_FETCHING:
+    case FETCH_DATA_PENDING:
       return {
         ...state,
-        isFetching: action.isFetching,
+        pending: true,
       };
-    case UPDATE_LIST:
+    case FETCH_DATA_SUCCESS:
       return {
         ...state,
+        pending: false,
         data: action.data,
       };
-    case SET_ERROR:
+    case FETCH_DATA_ERROR:
       return {
         ...state,
+        pending: false,
         error: action.error,
       };
     default:

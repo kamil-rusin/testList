@@ -3,11 +3,11 @@ import {FlatList, ActivityIndicator, StyleSheet, View, TouchableOpacity, Text} f
 import PictureItemComponent from './PictureItemComponent';
 
 const PicturesListComponent = props => {
-  const {isLoading, data, fetchData, sortDataByAuthor, sortDataById, loadInBrowser} = props;
+  const {pending, data, fetchData, sortDataByAuthor, sortDataById, loadInBrowser} = props;
 
   return (
     <>
-      {isLoading
+      {pending
         ?
         (<ActivityIndicator style={styles.indicatorContainer} size="large" color="dodgerblue" animating/>)
         :

@@ -1,3 +1,3 @@
-export const IS_FETCHING = 'IS_FETCHING';
-export const UPDATE_LIST = 'UPDATE_LIST';
-export const SET_ERROR = 'SET_ERROR';
+export const FETCH_DATA_PENDING = 'FETCH_DATA_PENDING';
+export const FETCH_DATA_SUCCESS = 'FETCH_DATA_SUCCESS';
+export const FETCH_DATA_ERROR = 'FETCH_DATA_ERROR';

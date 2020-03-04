@@ -1,45 +1,25 @@
 import React, {Component} from 'react';
-import PicturesListComponent from './PicturesListComponent';
 import {Linking} from 'react-native';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+
+import fetchDataAction from '../actions/fetchData';
+import PicturesListComponent from './PicturesListComponent';
+
 
 class PicturesListContainer extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      isLoading: false,
-      data: [],
-      error: null,
-    };
   }
 
   componentDidMount() {
-    this.fetchData();
+    const {fetchData} = this.props;
+    fetchData();
   }
-
-  fetchData = () => {
-    const url = 'https://picsum.photos/v2/list';
-    this.setState({
-      isLoading: true,
-    });
-    fetch(url)
-      .then(response => response.json())
-      .then(response => {
-        this.setState({
-          data: response,
-          isLoading: false,
-        });
-      })
-      .catch(() => {
-        this.setState({
-          error: true,
-        });
-      });
-  };
 
   sortDataByAuthor = () => {
     this.setState({
-      data: this.state.data.sort((first, second) => {
+      data: this.props.data.sort((first, second) => {
         return (first.author > second.author) ? 1 : -1;
       }),
     });
@@ -47,7 +27,7 @@ class PicturesListContainer extends Component {
 
   sortDataById = () => {
     this.setState({
-      data: this.state.data.sort((first, second) => first.id - second.id),
+      data: this.props.data.sort((first, second) => first.id - second.id),
     });
   };
 
@@ -60,15 +40,27 @@ class PicturesListContainer extends Component {
   render() {
     return (
       <PicturesListComponent
-        fetchData={this.fetchData}
+        fetchData={this.props.fetchData}
         sortDataByAuthor={this.sortDataByAuthor}
         sortDataById={this.sortDataById}
-        data={this.state.data}
-        isLoading={this.state.isLoading}
+        data={this.props.data}
+        pending={this.props.pending}
         loadInBrowser={this.loadInBrowser}
       />
     );
   }
 }
 
-export default PicturesListContainer;
+const mapStateToProps = (state) => {
+  return {
+    data: state.listReducer.data,
+    pending: state.listReducer.pending,
+    error: state.listReducer.error,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  fetchData: fetchDataAction,
+}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(PicturesListContainer);
