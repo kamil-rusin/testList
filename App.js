@@ -2,10 +2,19 @@ import React from 'react';
 import PicturesListContainer from './components/PicturesListContainer';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
+import WebContent from './components/WebContent';
 
-const HomeScreen = () => {
+const MainAppScreen = ({navigation}) => {
   return (
-    <PicturesListContainer/>
+    <PicturesListContainer nav={navigation}/>
+  );
+};
+
+const WebContentScreen = ({route}) => {
+  const {url} = route.params;
+
+  return (
+    <WebContent pageUrl={url}/>
   );
 };
 
@@ -15,7 +24,8 @@ const App: () => React$Node = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Home" component={HomeScreen}/>
+        <Stack.Screen name="MainApp" component={MainAppScreen}/>
+        <Stack.Screen name="WebContent" component={WebContentScreen}/>
       </Stack.Navigator>
     </NavigationContainer>);
 };

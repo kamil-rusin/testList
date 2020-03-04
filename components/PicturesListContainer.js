@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {Linking} from 'react-native';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
@@ -32,9 +31,7 @@ class PicturesListContainer extends Component {
   };
 
   loadInBrowser = (url) => {
-    Linking.openURL(url).catch(err =>
-      console.error('Couldn\'t load page', err),
-    );
+    this.props.nav.push('WebContent', {url: url});
   };
 
   render() {
