@@ -16,18 +16,18 @@ class PicturesListContainer extends Component {
     fetchData();
   }
 
-  sortDataByAuthor = () => {
+  sortDataByParam = (key) => {
     this.setState({
-      data: this.props.data.sort((first, second) => {
-        return (first.author > second.author) ? 1 : -1;
-      }),
+      data: this.props.data.sort(this.compareValues(key)),
     });
   };
 
-  sortDataById = () => {
-    this.setState({
-      data: this.props.data.sort((first, second) => first.id - second.id),
-    });
+  compareValues = (key) => {
+    return (a, b) => {
+      return (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) ? 0
+        : (key === 'id') ? a[key] - b[key]
+          : (a[key].toUpperCase() > b[key].toUpperCase()) ? 1 : -1;
+    };
   };
 
   loadInBrowser = (url) => {
@@ -38,8 +38,7 @@ class PicturesListContainer extends Component {
     return (
       <PicturesListComponent
         fetchData={this.props.fetchData}
-        sortDataByAuthor={this.sortDataByAuthor}
-        sortDataById={this.sortDataById}
+        sortDataByParam={(arg) => this.sortDataByParam(arg)}
         data={this.props.data}
         pending={this.props.pending}
         loadInBrowser={this.loadInBrowser}

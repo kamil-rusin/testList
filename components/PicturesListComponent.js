@@ -1,31 +1,35 @@
 import React from 'react';
-import {FlatList, ActivityIndicator, StyleSheet, View, TouchableOpacity, Text} from 'react-native';
+import {FlatList, StyleSheet, View, TouchableOpacity, Text, RefreshControl} from 'react-native';
 import PictureItemComponent from './PictureItemComponent';
 
 const PicturesListComponent = props => {
-  const {pending, data, fetchData, sortDataByAuthor, sortDataById, loadInBrowser} = props;
+  const {pending, data, fetchData, sortDataByParam, loadInBrowser} = props;
 
   return (
     <>
-      {pending
-        ?
-        (<ActivityIndicator style={styles.indicatorContainer} size="large" color="dodgerblue" animating/>)
-        :
-        (<FlatList
-          data={data}
-          renderItem={({item}) => (<PictureItemComponent loadInBrowser={loadInBrowser} item={item}/>)}
-          keyExtractor={item => item.id}
-        />)
-      }
+      <FlatList
+        data={data}
+        renderItem={({item}) => (<PictureItemComponent loadInBrowser={loadInBrowser} item={item}/>)}
+        keyExtractor={item => item.id}
+        refreshControl={
+          <RefreshControl
+            colors={['#1e89de']}
+            refreshing={pending}
+            onRefresh={fetchData}
+            enabled={true}
+          />
+        }
+      />
+
 
       <View style={styles.footer}>
         <TouchableOpacity style={styles.buttonContainer} onPress={fetchData}>
           <Text style={styles.buttonTitle}>REFRESH</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonContainer} onPress={sortDataByAuthor}>
+        <TouchableOpacity style={styles.buttonContainer} onPress={() => sortDataByParam('author')}>
           <Text style={styles.buttonTitle}>SORT BY AUTHOR</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonContainer} onPress={sortDataById}>
+        <TouchableOpacity style={styles.buttonContainer} onPress={() => sortDataByParam('id')}>
           <Text style={styles.buttonTitle}>SORT BY ID</Text>
         </TouchableOpacity>
       </View>

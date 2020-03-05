@@ -12,7 +12,6 @@ class WebContent extends Component {
     return (
       <WebView
         source={{ uri: pageUrl }}
-        style={{ marginTop: 5 }}
       />
     );
   }
