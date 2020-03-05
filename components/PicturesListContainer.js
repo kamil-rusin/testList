@@ -17,17 +17,20 @@ class PicturesListContainer extends Component {
   }
 
   sortDataByParam = (key) => {
-    this.setState({
-      data: this.props.data.sort(this.compareValues(key)),
-    });
-  };
+    let compareValues;
+    if (key === 'id') {
+      compareValues = (first, second) => {
+        return first.id - second.id;
+      };
+    } else if (key === 'author') {
+      compareValues = (first, second) => {
+        return (first.author > second.author) ? 1 : -1;
+      };
+    }
 
-  compareValues = (key) => {
-    return (a, b) => {
-      return (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) ? 0
-        : (key === 'id') ? a[key] - b[key]
-          : (a[key].toUpperCase() > b[key].toUpperCase()) ? 1 : -1;
-    };
+    this.setState({
+      data: this.props.data.sort(compareValues),
+    });
   };
 
   loadInBrowser = (url) => {
