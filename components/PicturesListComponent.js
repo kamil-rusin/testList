@@ -23,9 +23,6 @@ const PicturesListComponent = props => {
 
 
       <View style={styles.footer}>
-        <TouchableOpacity style={styles.buttonContainer} onPress={fetchData}>
-          <Text style={styles.buttonTitle}>REFRESH</Text>
-        </TouchableOpacity>
         <TouchableOpacity style={styles.buttonContainer} onPress={() => sortDataByParam('author')}>
           <Text style={styles.buttonTitle}>SORT BY AUTHOR</Text>
         </TouchableOpacity>
@@ -54,7 +51,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     margin: 4,
-    width: '30%',
+    width: '45%',
     backgroundColor: '#1e89de',
     borderRadius: 7,
     height: '80%',
@@ -62,7 +59,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   buttonTitle: {
-    fontSize: 13,
+    fontSize: 14,
     color: 'white',
   },
 });
