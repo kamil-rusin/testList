@@ -1,22 +1,30 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
+import React, {useEffect} from 'react';
+import {useSelector, useDispatch} from 'react-redux';
 
-import fetchDataAction from '../actions/fetchData';
 import PicturesListComponent from './PicturesListComponent';
+import fetchDataAction from '../actions/fetchData';
+
+const getListData = state => state.listReducer.data;
+const getListPending = state => state.listReducer.pending;
+const getListError = state => state.listReducer.error;
+
+const PictureListContainer = props => {
+  const listData = useSelector(getListData);
+  const listPending = useSelector(getListPending);
+  const listError = useSelector(getListError);
+  const dispatch = useDispatch();
 
 
-class PicturesListContainer extends Component {
-  constructor(props) {
-    super(props);
-  }
+  const fetchData = () => {
+    dispatch(fetchDataAction());
+  };
 
-  componentDidMount() {
-    const {fetchData} = this.props;
-    fetchData();
-  }
+  useEffect(() => {
+      fetchData();
+    }, [],
+  );
 
-  sortDataByParam = (key) => {
+  const sortDataByParam = (key) => {
     let compareValues;
     if (key === 'id') {
       compareValues = (first, second) => {
@@ -28,38 +36,25 @@ class PicturesListContainer extends Component {
       };
     }
 
+    //TODO: lokalny state danymi, useEffect co będzie reagował na zmianę, filter na podstawie klucza, stan czy filtrować i jakim kluczem i jak się rerenderuje to pokaze to co chce widziec
     this.setState({
-      data: this.props.data.sort(compareValues),
+      data: props.data.sort(compareValues),
     });
   };
-
-  loadInBrowser = (url) => {
-    this.props.nav.push('WebContent', {url: url});
+  const loadInBrowser = (url) => {
+    props.nav.push('WebContent', {url: url});
   };
 
-  render() {
-    return (
-      <PicturesListComponent
-        fetchData={this.props.fetchData}
-        sortDataByParam={(arg) => this.sortDataByParam(arg)}
-        data={this.props.data}
-        pending={this.props.pending}
-        loadInBrowser={this.loadInBrowser}
-      />
-    );
-  }
-}
-
-const mapStateToProps = (state) => {
-  return {
-    data: state.listReducer.data,
-    pending: state.listReducer.pending,
-    error: state.listReducer.error,
-  };
+  return (
+    <PicturesListComponent
+      fetchData={fetchData}
+      sortDataByParam={(arg) => sortDataByParam(arg)}
+      data={listData}
+      pending={listPending}
+      loadInBrowser={loadInBrowser}
+    />
+  );
 };
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  fetchData: fetchDataAction,
-}, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(PicturesListContainer);
+export default PictureListContainer;
