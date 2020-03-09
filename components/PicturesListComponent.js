@@ -23,7 +23,7 @@ const PicturesListComponent = props => {
 
 
       <View style={styles.footer}>
-        <TouchableOpacity style={styles.buttonContainer} onPress={sortDataByAuthor}>
+        <TouchableOpacity style={styles.buttonContainer} onPress={() => sortDataByParam('author')}>
           <Text style={styles.buttonTitle}>SORT BY AUTHOR</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.buttonContainer} onPress={() => sortDataByParam('id')}>
