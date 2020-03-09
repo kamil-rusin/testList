@@ -11,6 +11,7 @@ const listReducer = (state = initialState, action) => {
     case FETCH_DATA_PENDING:
       return {
         ...state,
+        error: null,
         pending: true,
       };
     case FETCH_DATA_SUCCESS:
