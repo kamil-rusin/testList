@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {Linking} from 'react-native';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
@@ -17,32 +16,32 @@ class PicturesListContainer extends Component {
     fetchData();
   }
 
-  sortDataByAuthor = () => {
-    this.setState({
-      data: this.props.data.sort((first, second) => {
+  sortDataByParam = (key) => {
+    let compareValues;
+    if (key === 'id') {
+      compareValues = (first, second) => {
+        return first.id - second.id;
+      };
+    } else if (key === 'author') {
+      compareValues = (first, second) => {
         return (first.author > second.author) ? 1 : -1;
-      }),
-    });
-  };
+      };
+    }
 
-  sortDataById = () => {
     this.setState({
-      data: this.props.data.sort((first, second) => first.id - second.id),
+      data: this.props.data.sort(compareValues),
     });
   };
 
   loadInBrowser = (url) => {
-    Linking.openURL(url).catch(err =>
-      console.error('Couldn\'t load page', err),
-    );
+    this.props.nav.push('WebContent', {url: url});
   };
 
   render() {
     return (
       <PicturesListComponent
         fetchData={this.props.fetchData}
-        sortDataByAuthor={this.sortDataByAuthor}
-        sortDataById={this.sortDataById}
+        sortDataByParam={(arg) => this.sortDataByParam(arg)}
         data={this.props.data}
         pending={this.props.pending}
         loadInBrowser={this.loadInBrowser}
