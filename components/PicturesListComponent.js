@@ -1,12 +1,14 @@
 import React from 'react';
 import {FlatList, StyleSheet, View, TouchableOpacity, Text, RefreshControl} from 'react-native';
 import PictureItemComponent from './PictureItemComponent';
+import ErrorElement from './ErrorElement';
 
 const PicturesListComponent = props => {
-  const {pending, data, fetchData, sortDataByParam, loadInBrowser} = props;
+  const {pending, data, error, fetchData, sortDataByParam, loadInBrowser} = props;
 
   return (
     <>
+      {error && <ErrorElement message={error}/>}
       <FlatList
         data={data}
         renderItem={({item}) => (<PictureItemComponent loadInBrowser={loadInBrowser} item={item}/>)}
@@ -20,7 +22,6 @@ const PicturesListComponent = props => {
           />
         }
       />
-
 
       <View style={styles.footer}>
         <TouchableOpacity style={styles.buttonContainer} onPress={() => sortDataByParam('author')}>

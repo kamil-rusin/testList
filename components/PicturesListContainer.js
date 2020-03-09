@@ -43,6 +43,7 @@ class PicturesListContainer extends Component {
         fetchData={this.props.fetchData}
         sortDataByParam={(arg) => this.sortDataByParam(arg)}
         data={this.props.data}
+        error={this.props.error}
         pending={this.props.pending}
         loadInBrowser={this.loadInBrowser}
       />
