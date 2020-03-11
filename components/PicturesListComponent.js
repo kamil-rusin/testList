@@ -3,7 +3,7 @@ import {FlatList, StyleSheet, View, TouchableOpacity, Text, RefreshControl} from
 import PictureItemComponent from './PictureItemComponent';
 
 const PicturesListComponent = props => {
-  const {pending, data, fetchData, sortDataByParam, loadInBrowser} = props;
+  const {pending, data, fetchData, sortDataByParam, loadInBrowser, handleSort} = props;
 
   return (
     <>
@@ -26,10 +26,10 @@ const PicturesListComponent = props => {
         <TouchableOpacity style={styles.buttonContainer} onPress={fetchData}>
           <Text style={styles.buttonTitle}>REFRESH</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonContainer} onPress={() => sortDataByParam('author')}>
+        <TouchableOpacity style={styles.buttonContainer} onPress={() => {sortDataByParam('author');handleSort();}}>
           <Text style={styles.buttonTitle}>SORT BY AUTHOR</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonContainer} onPress={() => sortDataByParam('id')}>
+        <TouchableOpacity style={styles.buttonContainer} onPress={() => {sortDataByParam('id'); handleSort();}}>
           <Text style={styles.buttonTitle}>SORT BY ID</Text>
         </TouchableOpacity>
       </View>

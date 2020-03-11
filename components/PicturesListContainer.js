@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 
 import PicturesListComponent from './PicturesListComponent';
@@ -9,11 +9,11 @@ const getListPending = state => state.listReducer.pending;
 const getListError = state => state.listReducer.error;
 
 const PictureListContainer = props => {
+  const [sort,setSort] = useState(false);
   const listData = useSelector(getListData);
   const listPending = useSelector(getListPending);
   const listError = useSelector(getListError);
   const dispatch = useDispatch();
-
 
   const fetchData = () => {
     dispatch(fetchDataAction());
@@ -36,11 +36,9 @@ const PictureListContainer = props => {
       };
     }
 
-    //TODO: lokalny state danymi, useEffect co będzie reagował na zmianę, filter na podstawie klucza, stan czy filtrować i jakim kluczem i jak się rerenderuje to pokaze to co chce widziec
-    this.setState({
-      data: props.data.sort(compareValues),
-    });
+    listData.sort(compareValues);
   };
+
   const loadInBrowser = (url) => {
     props.nav.push('WebContent', {url: url});
   };
@@ -49,6 +47,7 @@ const PictureListContainer = props => {
     <PicturesListComponent
       fetchData={fetchData}
       sortDataByParam={(arg) => sortDataByParam(arg)}
+      handleSort={() => setSort(!sort)}
       data={listData}
       pending={listPending}
       loadInBrowser={loadInBrowser}
