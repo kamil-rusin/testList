@@ -5,7 +5,7 @@ import ErrorElement from './ErrorElement';
 import EmptyListComponent from './EmptyListComponent';
 
 const PicturesListComponent = props => {
-  const {pending, data, error fetchData, sortDataByParam, loadInBrowser, handleSort} = props;
+  const {pending, data, error, fetchData, sortDataByParam, loadInBrowser, handleSort} = props;
 
   return (
     <>
@@ -29,9 +29,6 @@ const PicturesListComponent = props => {
 
 
       <View style={styles.footer}>
-        <TouchableOpacity style={styles.buttonContainer} onPress={fetchData}>
-          <Text style={styles.buttonTitle}>REFRESH</Text>
-        </TouchableOpacity>
         <TouchableOpacity style={styles.buttonContainer} onPress={() => {
           sortDataByParam('author');
           handleSort();
