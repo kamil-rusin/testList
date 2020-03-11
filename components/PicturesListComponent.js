@@ -1,11 +1,11 @@
 import React from 'react';
-import {FlatList, StyleSheet, View, TouchableOpacity, Text, RefreshControl, Dimensions} from 'react-native';
+import {FlatList, StyleSheet, View, TouchableOpacity, Text, RefreshControl} from 'react-native';
 import PictureItemComponent from './PictureItemComponent';
 import ErrorElement from './ErrorElement';
 import EmptyListComponent from './EmptyListComponent';
 
 const PicturesListComponent = props => {
-  const {pending, data, error, fetchData, sortDataByParam, loadInBrowser} = props;
+  const {pending, data, error, fetchData, sortDataByParam, loadInBrowser, handleSort} = props;
 
   return (
     <>
@@ -27,11 +27,18 @@ const PicturesListComponent = props => {
         }
       />
 
+
       <View style={styles.footer}>
-        <TouchableOpacity style={styles.buttonContainer} onPress={() => sortDataByParam('author')}>
+        <TouchableOpacity style={styles.buttonContainer} onPress={() => {
+          sortDataByParam('author');
+          handleSort();
+        }}>
           <Text style={styles.buttonTitle}>SORT BY AUTHOR</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonContainer} onPress={() => sortDataByParam('id')}>
+        <TouchableOpacity style={styles.buttonContainer} onPress={() => {
+          sortDataByParam('id');
+          handleSort();
+        }}>
           <Text style={styles.buttonTitle}>SORT BY ID</Text>
         </TouchableOpacity>
       </View>
