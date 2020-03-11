@@ -9,7 +9,7 @@ const getListPending = state => state.listReducer.pending;
 const getListError = state => state.listReducer.error;
 
 const PictureListContainer = props => {
-  const [sort,setSort] = useState(false);
+  const [sort, setSort] = useState(false);
   const listData = useSelector(getListData);
   const listPending = useSelector(getListPending);
   const listError = useSelector(getListError);
