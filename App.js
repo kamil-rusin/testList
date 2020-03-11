@@ -10,11 +10,11 @@ const MainAppScreen = ({navigation}) => {
   );
 };
 
-const WebContentScreen = ({route}) => {
+const WebContentScreen = ({navigation, route}) => {
   const {url} = route.params;
 
   return (
-    <WebContent pageUrl={url}/>
+    <WebContent pageUrl={url} navigation={navigation}/>
   );
 };
 
