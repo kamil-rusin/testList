@@ -1,5 +1,5 @@
 import React from 'react';
-import {FlatList, StyleSheet, View, TouchableOpacity, Text, RefreshControl} from 'react-native';
+import {FlatList, StyleSheet, View, TouchableOpacity, Text, RefreshControl, Dimensions} from 'react-native';
 import PictureItemComponent from './PictureItemComponent';
 import ErrorElement from './ErrorElement';
 import EmptyListComponent from './EmptyListComponent';
@@ -13,6 +13,7 @@ const PicturesListComponent = props => {
 
       <FlatList
         data={data}
+        contentContainerStyle={styles.listContainer}
         renderItem={({item}) => (<PictureItemComponent loadInBrowser={loadInBrowser} item={item}/>)}
         keyExtractor={item => item.id}
         ListEmptyComponent={!pending && (<EmptyListComponent/>)}
@@ -60,6 +61,10 @@ const styles = StyleSheet.create({
   buttonTitle: {
     fontSize: 14,
     color: 'white',
+  },
+  listContainer: {
+    display: 'flex',
+    flexGrow: 1,
   },
 });
 

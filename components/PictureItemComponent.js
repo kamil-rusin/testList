@@ -7,7 +7,7 @@ const PictureItemComponent = props => {
 
   return (
     <View style={styles.listItem}>
-      <Image style={styles.image} source={{uri: item.download_url}} />
+      <Image style={styles.image} source={{uri: item.download_url}}/>
       <View style={styles.detailsContainer}>
         <View style={styles.row}>
           <Text style={styles.author}>{item.author}</Text>
@@ -30,7 +30,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 1,
     borderColor: '#1d548b',
-    flex: 1,
     flexDirection: 'row',
     marginBottom: 3,
     margin: 5,
