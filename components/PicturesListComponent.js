@@ -1,7 +1,8 @@
 import React from 'react';
-import {FlatList, StyleSheet, View, TouchableOpacity, Text, RefreshControl} from 'react-native';
+import {FlatList, StyleSheet, View, TouchableOpacity, Text, RefreshControl, Dimensions} from 'react-native';
 import PictureItemComponent from './PictureItemComponent';
 import ErrorElement from './ErrorElement';
+import EmptyListComponent from './EmptyListComponent';
 
 const PicturesListComponent = props => {
   const {pending, data, error, fetchData, sortDataByParam, loadInBrowser} = props;
@@ -9,10 +10,13 @@ const PicturesListComponent = props => {
   return (
     <>
       {error && <ErrorElement message={error}/>}
+
       <FlatList
         data={data}
+        contentContainerStyle={styles.listContainer}
         renderItem={({item}) => (<PictureItemComponent loadInBrowser={loadInBrowser} item={item}/>)}
         keyExtractor={item => item.id}
+        ListEmptyComponent={!pending && (<EmptyListComponent/>)}
         refreshControl={
           <RefreshControl
             colors={['#1e89de']}
@@ -36,11 +40,6 @@ const PicturesListComponent = props => {
 };
 
 const styles = StyleSheet.create({
-  indicatorContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   footer: {
     borderTopWidth: 1,
     borderTopColor: '#1e89de',
@@ -62,6 +61,10 @@ const styles = StyleSheet.create({
   buttonTitle: {
     fontSize: 14,
     color: 'white',
+  },
+  listContainer: {
+    display: 'flex',
+    flexGrow: 1,
   },
 });
 
