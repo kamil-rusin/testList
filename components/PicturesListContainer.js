@@ -4,6 +4,7 @@ import {bindActionCreators} from 'redux';
 
 import fetchDataAction from '../actions/fetchData';
 import PicturesListComponent from './PicturesListComponent';
+import SplashScreen from 'react-native-splash-screen';
 
 
 class PicturesListContainer extends Component {
@@ -12,6 +13,7 @@ class PicturesListContainer extends Component {
   }
 
   componentDidMount() {
+    SplashScreen.hide();
     const {fetchData} = this.props;
     fetchData();
   }
