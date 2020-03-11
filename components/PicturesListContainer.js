@@ -49,6 +49,7 @@ const PictureListContainer = props => {
       sortDataByParam={(arg) => sortDataByParam(arg)}
       handleSort={() => setSort(!sort)}
       data={listData}
+      error={listError}
       pending={listPending}
       loadInBrowser={loadInBrowser}
     />

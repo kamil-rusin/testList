@@ -1,16 +1,22 @@
 import React from 'react';
 import {FlatList, StyleSheet, View, TouchableOpacity, Text, RefreshControl} from 'react-native';
 import PictureItemComponent from './PictureItemComponent';
+import ErrorElement from './ErrorElement';
+import EmptyListComponent from './EmptyListComponent';
 
 const PicturesListComponent = props => {
-  const {pending, data, fetchData, sortDataByParam, loadInBrowser, handleSort} = props;
+  const {pending, data, error fetchData, sortDataByParam, loadInBrowser, handleSort} = props;
 
   return (
     <>
+      {error && <ErrorElement message={error}/>}
+
       <FlatList
         data={data}
+        contentContainerStyle={styles.listContainer}
         renderItem={({item}) => (<PictureItemComponent loadInBrowser={loadInBrowser} item={item}/>)}
         keyExtractor={item => item.id}
+        ListEmptyComponent={!pending && (<EmptyListComponent/>)}
         refreshControl={
           <RefreshControl
             colors={['#1e89de']}
@@ -26,10 +32,16 @@ const PicturesListComponent = props => {
         <TouchableOpacity style={styles.buttonContainer} onPress={fetchData}>
           <Text style={styles.buttonTitle}>REFRESH</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonContainer} onPress={() => {sortDataByParam('author');handleSort();}}>
+        <TouchableOpacity style={styles.buttonContainer} onPress={() => {
+          sortDataByParam('author');
+          handleSort();
+        }}>
           <Text style={styles.buttonTitle}>SORT BY AUTHOR</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonContainer} onPress={() => {sortDataByParam('id'); handleSort();}}>
+        <TouchableOpacity style={styles.buttonContainer} onPress={() => {
+          sortDataByParam('id');
+          handleSort();
+        }}>
           <Text style={styles.buttonTitle}>SORT BY ID</Text>
         </TouchableOpacity>
       </View>
@@ -38,11 +50,6 @@ const PicturesListComponent = props => {
 };
 
 const styles = StyleSheet.create({
-  indicatorContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   footer: {
     borderTopWidth: 1,
     borderTopColor: '#1e89de',
@@ -54,7 +61,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     margin: 4,
-    width: '30%',
+    width: '45%',
     backgroundColor: '#1e89de',
     borderRadius: 7,
     height: '80%',
@@ -62,8 +69,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   buttonTitle: {
-    fontSize: 13,
+    fontSize: 14,
     color: 'white',
+  },
+  listContainer: {
+    display: 'flex',
+    flexGrow: 1,
   },
 });
 
