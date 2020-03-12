@@ -5,6 +5,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import PicturesListComponent from './PicturesListComponent';
 import fetchDataAction from '../actions/fetchData';
 import filterDataAction from '../actions/filterData';
+import TextFilterElement from './TextFilterElement';
 
 const getSearchKey = state => state.listReducer.searchKey;
 const getDataToFilter = state => state.listReducer.data;
@@ -56,10 +57,9 @@ const PictureListContainer = props => {
 
   return (
     <>
-      <TextInput style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-                 placeholder="Search name"
-                 value={searchKey}
-                 onChangeText={text => handleChange(text)}/>
+      <TextFilterElement
+        searchKey={searchKey}
+        handleChange={handleChange}/>
       <PicturesListComponent
         fetchData={fetchData}
         sortDataByParam={(arg) => sortDataByParam(arg)}
