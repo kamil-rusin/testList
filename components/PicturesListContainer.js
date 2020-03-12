@@ -23,7 +23,6 @@ const PictureListContainer = props => {
   const dispatch = useDispatch();
 
   const handleChange = text => {
-    console.log(text);
     dispatch(filterDataAction(text, dataToFilter));
   };
 

@@ -8,11 +8,9 @@ const TextFilterElement = props => {
   const [textInputStatus, setTextInputStatus] = useState('');
   const textInput = useRef(null);
 
-  const onButtonClick = () => {
+  const onCancelButtonClick = () => {
     setTextInputStatus('untouched');
     textInput.current.blur();
-    textInput.current.clear();
-    handleChange('');
   };
 
   const clearText = () => {
@@ -48,7 +46,7 @@ const TextFilterElement = props => {
       {renderClearButton()}
       <TouchableOpacity
         style={styles.buttonContainer}
-        onPress={onButtonClick}>
+        onPress={onCancelButtonClick}>
         <Text style={styles.buttonTitle}>CANCEL</Text>
       </TouchableOpacity>
     </View>
