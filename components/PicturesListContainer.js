@@ -1,18 +1,21 @@
 import React, {useEffect, useState} from 'react';
+import {TextInput} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 
 import PicturesListComponent from './PicturesListComponent';
 import fetchDataAction from '../actions/fetchData';
-import {TextInput} from 'react-native';
+import filterDataAction from '../actions/filterData';
 
-const getListData = state => state.listReducer.data;
+const getSearchKey = state => state.listReducer.searchKey;
+const getDataToFilter = state => state.listReducer.data;
+const getListData = state => state.listReducer.filteredData;
 const getListPending = state => state.listReducer.pending;
 const getListError = state => state.listReducer.error;
 
 const PictureListContainer = props => {
   const [sort, setSort] = useState(false);
-  const [searchKey, setSearchKey] = useState('');
-  const [searchResults, setSearchResults] = useState([]);
+  const searchKey = useSelector(getSearchKey);
+  const dataToFilter = useSelector(getDataToFilter);
   const listData = useSelector(getListData);
   const listPending = useSelector(getListPending);
   const listError = useSelector(getListError);
@@ -20,7 +23,7 @@ const PictureListContainer = props => {
 
   const handleChange = text => {
     console.log(text);
-    setSearchKey(text);
+    dispatch(filterDataAction(text, dataToFilter));
   };
 
   const fetchData = () => {
@@ -31,13 +34,6 @@ const PictureListContainer = props => {
       fetchData();
     }, [],
   );
-
-  useEffect(() => {
-    const results = listData.filter(item =>
-      item.author.toLowerCase().includes(searchKey.toLowerCase().trim()),
-    );
-    setSearchResults(results);
-  }, [searchKey]);
 
   const sortDataByParam = (key) => {
     let compareValues;
@@ -68,7 +64,7 @@ const PictureListContainer = props => {
         fetchData={fetchData}
         sortDataByParam={(arg) => sortDataByParam(arg)}
         handleSort={() => setSort(!sort)}
-        data={searchKey ? searchResults : listData}
+        data={listData}
         error={listError}
         pending={listPending}
         loadInBrowser={loadInBrowser}
