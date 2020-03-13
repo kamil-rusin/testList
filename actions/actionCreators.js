@@ -1,4 +1,4 @@
-import {FETCH_DATA_ERROR, FETCH_DATA_PENDING, FETCH_DATA_SUCCESS} from './types';
+import {FETCH_DATA_ERROR, FETCH_DATA_PENDING, FETCH_DATA_SUCCESS, FILTER_DATA, UPDATE_SEARCH_KEY} from './types';
 
 export const fetchDataPending = () => {
   return {
@@ -17,5 +17,19 @@ export const fetchDataError = (error) => {
   return {
     type: FETCH_DATA_ERROR,
     error: error,
+  };
+};
+
+export const updateFilteredData = (data) => {
+  return {
+    type: FILTER_DATA,
+    data: data,
+  };
+};
+
+export const updateSearchKey = (key) => {
+  return {
+    type: UPDATE_SEARCH_KEY,
+    searchKey: key,
   };
 };

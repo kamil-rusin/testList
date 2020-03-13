@@ -1,19 +1,30 @@
 import React, {useEffect, useState} from 'react';
+import {TextInput} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 
 import PicturesListComponent from './PicturesListComponent';
 import fetchDataAction from '../actions/fetchData';
+import filterDataAction from '../actions/filterData';
+import TextFilterElement from './TextFilterElement';
 
-const getListData = state => state.listReducer.data;
+const getSearchKey = state => state.listReducer.searchKey;
+const getDataToFilter = state => state.listReducer.data;
+const getListData = state => state.listReducer.filteredData;
 const getListPending = state => state.listReducer.pending;
 const getListError = state => state.listReducer.error;
 
 const PictureListContainer = props => {
   const [sort, setSort] = useState(false);
+  const searchKey = useSelector(getSearchKey);
+  const dataToFilter = useSelector(getDataToFilter);
   const listData = useSelector(getListData);
   const listPending = useSelector(getListPending);
   const listError = useSelector(getListError);
   const dispatch = useDispatch();
+
+  const handleChange = text => {
+    dispatch(filterDataAction(text, dataToFilter));
+  };
 
   const fetchData = () => {
     dispatch(fetchDataAction());
@@ -44,15 +55,20 @@ const PictureListContainer = props => {
   };
 
   return (
-    <PicturesListComponent
-      fetchData={fetchData}
-      sortDataByParam={(arg) => sortDataByParam(arg)}
-      handleSort={() => setSort(!sort)}
-      data={listData}
-      error={listError}
-      pending={listPending}
-      loadInBrowser={loadInBrowser}
-    />
+    <>
+      <TextFilterElement
+        searchKey={searchKey}
+        handleChange={handleChange}/>
+      <PicturesListComponent
+        fetchData={fetchData}
+        sortDataByParam={(arg) => sortDataByParam(arg)}
+        handleSort={() => setSort(!sort)}
+        data={listData}
+        error={listError}
+        pending={listPending}
+        loadInBrowser={loadInBrowser}
+      />
+    </>
   );
 };
 
