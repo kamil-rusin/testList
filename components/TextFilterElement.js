@@ -5,11 +5,9 @@ import {StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native'
 const TextFilterElement = props => {
   const {handleChange, searchKey} = props;
 
-  const [textInputStatus, setTextInputStatus] = useState('');
   const textInput = useRef(null);
 
   const onCancelButtonClick = () => {
-    setTextInputStatus('untouched');
     textInput.current.blur();
   };
 
@@ -19,15 +17,13 @@ const TextFilterElement = props => {
   };
 
   const renderClearButton = () => {
-    if (textInputStatus === 'touched') {
-      return (
-        <TouchableOpacity
-          style={styles.buttonContainer}
-          onPress={clearText}>
-          <Text style={styles.buttonTitle}>X</Text>
-        </TouchableOpacity>
-      );
-    }
+    return (
+      <TouchableOpacity
+        style={styles.buttonContainer}
+        onPress={clearText}>
+        <Text style={styles.buttonTitle}>X</Text>
+      </TouchableOpacity>
+    );
   };
 
   return (
@@ -39,11 +35,10 @@ const TextFilterElement = props => {
         style={styles.filterInput}
         placeholder="Search name"
         value={searchKey}
-        onChangeText={text => {
-          handleChange(text);
-          setTextInputStatus('touched');
-        }}/>
-      {renderClearButton()}
+        onChangeText={text => handleChange(text)}/>
+
+      {(searchKey !== '') ? renderClearButton() : (<TouchableOpacity style={styles.buttonContainer}/>)}
+
       <TouchableOpacity
         style={styles.buttonContainer}
         onPress={onCancelButtonClick}>
@@ -72,6 +67,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     margin: 10,
+    minWidth: 10,
   },
   buttonTitle: {
     color: '#1e89de',
