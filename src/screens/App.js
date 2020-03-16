@@ -1,8 +1,8 @@
 import React from 'react';
-import PicturesListContainer from './components/PicturesListContainer';
+import PicturesListContainer from '../components/PicturesListContainer';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import WebContent from './components/WebContent';
+import WebContent from '../components/WebContent';
 
 const MainAppScreen = ({ navigation }) => {
     return <PicturesListContainer nav={navigation} />;

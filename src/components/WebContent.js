@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { WebView } from 'react-native-webview';
 import { Image, Linking, StyleSheet, TouchableOpacity } from 'react-native';
-import { LINK_EXTERNAL } from '../Images';
+import { LINK_EXTERNAL } from '../constants/Images';
 
 const WebContent = (props) => {
     const { pageUrl, navigation } = props;

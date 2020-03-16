@@ -1,6 +1,6 @@
 import React from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
-import { EMPTY_LIST } from '../Images';
+import { EMPTY_LIST } from '../constants/Images';
 
 const EmptyListComponent = () => {
     return (

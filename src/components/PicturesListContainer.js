@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import PicturesListComponent from './PicturesListComponent';
-import fetchDataAction from '../actions/fetchData';
-import filterDataAction from '../actions/filterData';
+import fetchDataAction from '../redux/actions/fetchData';
+import filterDataAction from '../redux/actions/filterData';
 import TextFilterElement from './TextFilterElement';
 
 const getSearchKey = (state) => state.listReducer.searchKey;
@@ -11,6 +11,8 @@ const getDataToFilter = (state) => state.listReducer.data;
 const getListData = (state) => state.listReducer.filteredData;
 const getListPending = (state) => state.listReducer.pending;
 const getListError = (state) => state.listReducer.error;
+
+const useMountEffect = (fun) => useEffect(fun, []);
 
 const PictureListContainer = (props) => {
     const [sort, setSort] = useState(false);
@@ -29,9 +31,7 @@ const PictureListContainer = (props) => {
         dispatch(fetchDataAction());
     };
 
-    useEffect(() => {
-        fetchData();
-    }, []);
+    useMountEffect(fetchData);
 
     const sortDataByParam = (key) => {
         let compareValues;
