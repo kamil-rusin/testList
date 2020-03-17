@@ -5,6 +5,7 @@ import PicturesListComponent from './PicturesListComponent';
 import fetchDataAction from '../redux/actions/fetchData';
 import filterDataAction from '../redux/actions/filterData';
 import TextFilterElement from './TextFilterElement';
+import SplashScreen from 'react-native-splash-screen';
 
 const getSearchKey = (state) => state.listReducer.searchKey;
 const getDataToFilter = (state) => state.listReducer.data;
@@ -33,6 +34,7 @@ const PictureListContainer = (props) => {
     }, [dispatch]);
 
     useEffect(() => {
+        SplashScreen.hide();
         fetchData();
     }, [fetchData]);
 
