@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import PicturesListComponent from './PicturesListComponent';
@@ -12,8 +12,6 @@ const getListData = (state) => state.listReducer.filteredData;
 const getListPending = (state) => state.listReducer.pending;
 const getListError = (state) => state.listReducer.error;
 
-const useMountEffect = (fun) => useEffect(fun, []);
-
 const PictureListContainer = (props) => {
     const [sort, setSort] = useState(false);
     const searchKey = useSelector(getSearchKey);
@@ -23,15 +21,20 @@ const PictureListContainer = (props) => {
     const listError = useSelector(getListError);
     const dispatch = useDispatch();
 
-    const handleChange = (text) => {
-        dispatch(filterDataAction(text, dataToFilter));
-    };
+    const handleChange = useCallback(
+        (text) => {
+            dispatch(filterDataAction(text, dataToFilter));
+        },
+        [dispatch, dataToFilter],
+    );
 
-    const fetchData = () => {
+    const fetchData = useCallback(() => {
         dispatch(fetchDataAction());
-    };
+    }, [dispatch]);
 
-    useMountEffect(fetchData);
+    useEffect(() => {
+        fetchData();
+    }, [fetchData]);
 
     const sortDataByParam = (key) => {
         let compareValues;
