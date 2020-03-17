@@ -5,6 +5,8 @@ import PicturesListComponent from './PicturesListComponent';
 import fetchDataAction from '../redux/actions/fetchData';
 import filterDataAction from '../redux/actions/filterData';
 import TextFilterElement from './TextFilterElement';
+import { Image, TouchableOpacity } from 'react-native';
+import { QR_CODE } from '../constants/Images';
 
 const getSearchKey = (state) => state.listReducer.searchKey;
 const getDataToFilter = (state) => state.listReducer.data;
@@ -20,6 +22,28 @@ const PictureListContainer = (props) => {
     const listPending = useSelector(getListPending);
     const listError = useSelector(getListError);
     const dispatch = useDispatch();
+    const { nav } = props;
+
+    React.useLayoutEffect(() => {
+        nav.setOptions({
+            headerRight: () => (
+                <TouchableOpacity
+                    onPress={() => {
+                        nav.push('QRScanner');
+                    }}
+                >
+                    <Image
+                        style={{
+                            width: 32,
+                            height: 32,
+                            margin: 10,
+                        }}
+                        source={QR_CODE}
+                    />
+                </TouchableOpacity>
+            ),
+        });
+    }, [nav]);
 
     const handleChange = useCallback(
         (text) => {
@@ -52,7 +76,7 @@ const PictureListContainer = (props) => {
     };
 
     const loadInBrowser = (url) => {
-        props.nav.push('WebContent', { url: url });
+        nav.push('WebContent', { url: url });
     };
 
     return (
