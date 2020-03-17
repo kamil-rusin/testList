@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { WebView } from 'react-native-webview';
+import ProgressWebView from 'react-native-progress-webview';
 import { Image, Linking, StyleSheet, TouchableOpacity } from 'react-native';
 import { LINK_EXTERNAL } from '../constants/Images';
 
@@ -24,7 +24,7 @@ const WebContent = (props) => {
     }, [navigation, currentURL]);
 
     return (
-        <WebView
+        <ProgressWebView
             source={{ uri: pageUrl }}
             onNavigationStateChange={(newNavState) => setURL(newNavState.url)}
         />
