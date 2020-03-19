@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PicturesListContainer from '../components/PicturesListContainer';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -18,7 +18,9 @@ const WebContentScreen = ({ navigation, route }) => {
 const Stack = createStackNavigator();
 
 const App: () => React$Node = () => {
-    SplashScreen.hide();
+    useEffect(() => {
+        SplashScreen.hide();
+    }, []);
 
     return (
         <NavigationContainer>
