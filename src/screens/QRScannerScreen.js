@@ -1,28 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import { Alert, StyleSheet, View } from 'react-native';
+import { useIsFocused } from '@react-navigation/native';
 
 const QRScannerScreen = ({ navigation }) => {
-    const [reactivate, setReactivate] = useState(false);
-    const [isFocused, setIsFocused] = useState(false);
-
-    useEffect(() => {
-        const unsubscribe = navigation.addListener('focus', () => {
-            setReactivate(true);
-            setIsFocused(true);
-        });
-
-        return unsubscribe;
-    }, [navigation]);
-
-    useEffect(() => {
-        const unsubscribe = navigation.addListener('blur', () => {
-            setReactivate(false);
-            setIsFocused(false);
-        });
-
-        return unsubscribe;
-    }, [navigation]);
+    const isFocused = useIsFocused();
 
     const onSuccess = (data) => {
         const regex = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/gm;
@@ -46,7 +28,6 @@ const QRScannerScreen = ({ navigation }) => {
             [
                 {
                     text: 'OK',
-                    onPress: () => setReactivate(true),
                 },
             ],
             { cancelable: false },
@@ -60,9 +41,9 @@ const QRScannerScreen = ({ navigation }) => {
                     fadeIn={true}
                     containerStyle={styles.container}
                     reactivateTimeout={2000}
-                    reactivate={reactivate}
-                    vibrate={true}
-                    onRead={navigation.isFocused() ? (e) => onSuccess(e.data) : null}
+                    reactivate={isFocused}
+                    vibrate={isFocused}
+                    onRead={isFocused ? (e) => onSuccess(e.data) : null}
                 />
             )}
         </View>
