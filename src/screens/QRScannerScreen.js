@@ -41,9 +41,9 @@ const QRScannerScreen = ({ navigation }) => {
                     fadeIn={true}
                     containerStyle={styles.container}
                     reactivateTimeout={2000}
-                    reactivate={isFocused}
-                    vibrate={isFocused}
-                    onRead={isFocused ? (e) => onSuccess(e.data) : null}
+                    reactivate={true}
+                    vibrate={true}
+                    onRead={(e) => onSuccess(e.data)}
                 />
             )}
         </View>
