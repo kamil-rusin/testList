@@ -44,7 +44,11 @@ const PictureListContainer = (props) => {
             };
         } else if (key === 'author') {
             compareValues = (first, second) => {
-                return first.author > second.author ? 1 : -1;
+                if (first.author > second.author) {
+                    return 1;
+                } else if (first.author < second.author) {
+                    return -1;
+                } else return first.id - second.id;
             };
         }
 
