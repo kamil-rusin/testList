@@ -4,15 +4,25 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import WebContent from '../components/WebContent';
 import SplashScreen from 'react-native-splash-screen';
+import { SafeAreaView } from 'react-native';
+import { safeAreaViewStyle } from '../styles/safeAreaViewStyle';
 
 const MainAppScreen = ({ navigation }) => {
-    return <PicturesListContainer nav={navigation} />;
+    return (
+        <SafeAreaView style={safeAreaViewStyle.container}>
+            <PicturesListContainer nav={navigation} />
+        </SafeAreaView>
+    );
 };
 
 const WebContentScreen = ({ navigation, route }) => {
     const { url } = route.params;
 
-    return <WebContent pageUrl={url} navigation={navigation} />;
+    return (
+        <SafeAreaView style={safeAreaViewStyle.container}>
+            <WebContent pageUrl={url} navigation={navigation} />
+        </SafeAreaView>
+    );
 };
 
 const Stack = createStackNavigator();
