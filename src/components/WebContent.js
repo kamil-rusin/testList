@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import ProgressWebView from 'react-native-progress-webview';
-import { Image, Linking, StyleSheet, TouchableOpacity } from 'react-native';
+import { Image, Linking, TouchableOpacity } from 'react-native';
 import { LINK_EXTERNAL } from '../constants/Images';
+import { imageStyles } from '../styles/imageStyles';
 
 const WebContent = (props) => {
     const { pageUrl, navigation } = props;
@@ -17,7 +18,7 @@ const WebContent = (props) => {
                         );
                     }}
                 >
-                    <Image style={styles.image} source={LINK_EXTERNAL} />
+                    <Image style={imageStyles.headerImage} source={LINK_EXTERNAL} />
                 </TouchableOpacity>
             ),
         });
@@ -30,13 +31,5 @@ const WebContent = (props) => {
         />
     );
 };
-
-const styles = StyleSheet.create({
-    image: {
-        width: 32,
-        height: 32,
-        margin: 10,
-    },
-});
 
 export default WebContent;

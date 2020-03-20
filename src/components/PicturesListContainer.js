@@ -7,6 +7,7 @@ import filterDataAction from '../redux/actions/filterData';
 import TextFilterElement from './TextFilterElement';
 import { Image, TouchableOpacity } from 'react-native';
 import { QR_CODE } from '../constants/Images';
+import { imageStyles } from '../styles/imageStyles';
 
 const getSearchKey = (state) => state.listReducer.searchKey;
 const getDataToFilter = (state) => state.listReducer.data;
@@ -32,14 +33,7 @@ const PictureListContainer = (props) => {
                         nav.push('QRScanner');
                     }}
                 >
-                    <Image
-                        style={{
-                            width: 32,
-                            height: 32,
-                            margin: 10,
-                        }}
-                        source={QR_CODE}
-                    />
+                    <Image style={imageStyles.headerImage} source={QR_CODE} />
                 </TouchableOpacity>
             ),
         });
