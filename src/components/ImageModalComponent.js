@@ -1,19 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { StyleSheet, View, Modal, Text } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 const ImageModalComponent = (props) => {
-    const { visible, url } = props;
-    const [modalOpen, setModalOpen] = useState(visible);
+    const { isOpened, url, setIsOpened } = props;
 
     return (
-        <Modal visible={modalOpen} animationType='fade'>
+        <Modal visible={isOpened} animationType='fade'>
             <View style={styles.modalContent}>
                 <MaterialIcons
                     name='close'
                     size={24}
                     style={styles.modalCloseIcon}
-                    onPress={() => setModalOpen(false)}
+                    onPress={() => setIsOpened(false)}
                 />
                 <Text>{url}</Text>
             </View>

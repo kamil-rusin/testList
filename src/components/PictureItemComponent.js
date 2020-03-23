@@ -1,13 +1,21 @@
 import React from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Badge } from 'react-native-elements';
 
 const PictureItemComponent = (props) => {
-    const { loadInBrowser, item } = props;
+    const { loadInBrowser, item, setModalUrl, setModalOpen } = props;
 
     return (
         <View style={styles.listItem}>
-            <Image style={styles.image} source={{ uri: item.download_url }} />
+            <TouchableOpacity
+                onPress={() => {
+                    setModalUrl(item.download_url);
+                    setModalOpen(true);
+                }}
+            >
+                <Image style={styles.image} source={{ uri: item.download_url }} />
+            </TouchableOpacity>
+
             <View style={styles.detailsContainer}>
                 <View style={styles.row}>
                     <Text style={styles.author}>{item.author}</Text>

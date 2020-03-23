@@ -5,6 +5,7 @@ import PicturesListComponent from './PicturesListComponent';
 import fetchDataAction from '../redux/actions/fetchData';
 import filterDataAction from '../redux/actions/filterData';
 import TextFilterElement from './TextFilterElement';
+import ImageModalComponent from './ImageModalComponent';
 
 const getSearchKey = (state) => state.listReducer.searchKey;
 const getDataToFilter = (state) => state.listReducer.data;
@@ -14,6 +15,8 @@ const getListError = (state) => state.listReducer.error;
 
 const PictureListContainer = (props) => {
     const [sort, setSort] = useState(false);
+    const [modalOpen, setModalOpen] = useState(false);
+    const [modalUrl, setModalUrl] = useState('');
     const searchKey = useSelector(getSearchKey);
     const dataToFilter = useSelector(getDataToFilter);
     const listData = useSelector(getListData);
@@ -57,6 +60,7 @@ const PictureListContainer = (props) => {
 
     return (
         <>
+            <ImageModalComponent isOpened={modalOpen} setIsOpened={setModalOpen} url={modalUrl} />
             <TextFilterElement searchKey={searchKey} handleChange={handleChange} />
             <PicturesListComponent
                 fetchData={fetchData}
@@ -66,6 +70,8 @@ const PictureListContainer = (props) => {
                 error={listError}
                 pending={listPending}
                 loadInBrowser={loadInBrowser}
+                setModalUrl={setModalUrl}
+                setModalOpen={setModalOpen}
             />
         </>
     );

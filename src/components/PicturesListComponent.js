@@ -5,7 +5,17 @@ import ErrorElement from './ErrorElement';
 import EmptyListComponent from './EmptyListComponent';
 
 const PicturesListComponent = (props) => {
-    const { pending, data, error, fetchData, sortDataByParam, loadInBrowser, handleSort } = props;
+    const {
+        pending,
+        data,
+        error,
+        fetchData,
+        sortDataByParam,
+        loadInBrowser,
+        handleSort,
+        setModalUrl,
+        setModalOpen,
+    } = props;
 
     return (
         <>
@@ -15,7 +25,12 @@ const PicturesListComponent = (props) => {
                 data={data}
                 contentContainerStyle={styles.listContainer}
                 renderItem={({ item }) => (
-                    <PictureItemComponent loadInBrowser={loadInBrowser} item={item} />
+                    <PictureItemComponent
+                        loadInBrowser={loadInBrowser}
+                        item={item}
+                        setModalUrl={setModalUrl}
+                        setModalOpen={setModalOpen}
+                    />
                 )}
                 keyExtractor={(item) => item.id}
                 ListEmptyComponent={!pending && <EmptyListComponent />}
