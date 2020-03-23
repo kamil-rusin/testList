@@ -1,11 +1,34 @@
 import React from 'react';
-import { StyleSheet, View, Modal, Image, Dimensions } from 'react-native';
+import { StyleSheet, View, Modal, Animated, Dimensions } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { PinchGestureHandler, State } from 'react-native-gesture-handler';
 
 const { width } = Dimensions.get('window');
 
 const ImageModalComponent = (props) => {
     const { isOpened, url, setIsOpened } = props;
+    const scale = new Animated.Value(1);
+
+    const onZoomEvent = Animated.event(
+        [
+            {
+                nativeEvent: { scale: scale },
+            },
+        ],
+        {
+            useNativeDriver: true,
+        },
+    );
+
+    const onZoomStateChange = (event) => {
+        console.log('onZoomStateChange');
+        if (event.nativeEvent.oldState === State.ACTIVE) {
+            Animated.spring(scale, {
+                toValue: 1,
+                useNativeDriver: true,
+            }).start();
+        }
+    };
 
     return (
         <Modal
@@ -22,7 +45,16 @@ const ImageModalComponent = (props) => {
                         size={32}
                         onPress={() => setIsOpened(false)}
                     />
-                    <Image style={styles.image} source={{ uri: url }} resizeMode='contain' />
+                    <PinchGestureHandler
+                        onGestureEvent={onZoomEvent}
+                        onHandlerStateChange={onZoomStateChange}
+                    >
+                        <Animated.Image
+                            style={[styles.image, { transform: [{ scale: scale }] }]}
+                            source={{ uri: url }}
+                            resizeMode='contain'
+                        />
+                    </PinchGestureHandler>
                 </View>
             </View>
         </Modal>
