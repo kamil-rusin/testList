@@ -1,30 +1,10 @@
 import React, { useEffect } from 'react';
-import PicturesListContainer from '../components/PicturesListContainer';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import WebContent from '../components/WebContent';
 import QRScannerScreen from './QRScannerScreen';
 import SplashScreen from 'react-native-splash-screen';
-import { SafeAreaView } from 'react-native';
-import { safeAreaViewStyle } from '../styles/safeAreaViewStyle';
-
-const MainAppScreen = ({ navigation }) => {
-    return (
-        <SafeAreaView style={safeAreaViewStyle.container}>
-            <PicturesListContainer nav={navigation} />
-        </SafeAreaView>
-    );
-};
-
-const WebContentScreen = ({ navigation, route }) => {
-    const { url } = route.params;
-
-    return (
-        <SafeAreaView style={safeAreaViewStyle.container}>
-            <WebContent pageUrl={url} navigation={navigation} />
-        </SafeAreaView>
-    );
-};
+import WebContentScreen from './WebContentScreen';
+import MainAppScreen from './MainAppScreen';
 
 const Stack = createStackNavigator();
 

@@ -1,7 +1,8 @@
 import React from 'react';
 import QRCodeScanner from 'react-native-qrcode-scanner';
-import { Alert, StyleSheet, View } from 'react-native';
+import { Alert, SafeAreaView, StyleSheet, View } from 'react-native';
 import { useIsFocused } from '@react-navigation/native';
+import { safeAreaViewStyle } from '../styles/safeAreaViewStyle';
 
 const QRScannerScreen = ({ navigation }) => {
     const isFocused = useIsFocused();
@@ -35,18 +36,20 @@ const QRScannerScreen = ({ navigation }) => {
     };
 
     return (
-        <View style={styles.view}>
-            {isFocused && (
-                <QRCodeScanner
-                    fadeIn={true}
-                    containerStyle={styles.container}
-                    reactivateTimeout={2000}
-                    reactivate={true}
-                    vibrate={true}
-                    onRead={(e) => onSuccess(e.data)}
-                />
-            )}
-        </View>
+        <SafeAreaView style={safeAreaViewStyle.container}>
+            <View style={styles.view}>
+                {isFocused && (
+                    <QRCodeScanner
+                        fadeIn={true}
+                        containerStyle={styles.container}
+                        reactivateTimeout={2000}
+                        reactivate={true}
+                        vibrate={true}
+                        onRead={(e) => onSuccess(e.data)}
+                    />
+                )}
+            </View>
+        </SafeAreaView>
     );
 };
 
