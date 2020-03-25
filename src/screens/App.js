@@ -16,10 +16,10 @@ const WebContentScreen = ({ navigation, route }) => {
     return <WebContent pageUrl={url} navigation={navigation} />;
 };
 
-const ModalScreen = ({ navigation, route }) => {
+const ModalScreen = ({ route }) => {
     const { url } = route.params;
 
-    return <ImageModalComponent imageUrl={url} navigation={navigation} />;
+    return <ImageModalComponent imageUrl={url} />;
 };
 
 const Stack = createStackNavigator();

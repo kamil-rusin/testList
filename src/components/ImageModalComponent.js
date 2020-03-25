@@ -1,12 +1,12 @@
 import React from 'react';
-import { StyleSheet, View, Animated, Dimensions } from 'react-native';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { PinchGestureHandler, State } from 'react-native-gesture-handler';
+import { StyleSheet, View, Dimensions } from 'react-native';
+import { PinchGestureHandler } from 'react-native-gesture-handler';
+import Animated from 'react-native-reanimated';
 
 const { width } = Dimensions.get('window');
 
 const ImageModalComponent = (props) => {
-    const { imageUrl, navigation } = props;
+    const { imageUrl } = props;
     const scale = new Animated.Value(1);
 
     const onZoomEvent = Animated.event(
@@ -20,29 +20,10 @@ const ImageModalComponent = (props) => {
         },
     );
 
-    const onZoomStateChange = (event) => {
-        console.log('onZoomStateChange');
-        if (event.nativeEvent.oldState === State.ACTIVE) {
-            Animated.spring(scale, {
-                toValue: 1,
-                useNativeDriver: true,
-            }).start();
-        }
-    };
-
     return (
         <View style={styles.container}>
             <View style={styles.modalContent}>
-                <MaterialCommunityIcons
-                    style={styles.modalCloseIcon}
-                    name='close-circle'
-                    size={32}
-                    onPress={() => navigation.goBack()}
-                />
-                <PinchGestureHandler
-                    onGestureEvent={onZoomEvent}
-                    onHandlerStateChange={onZoomStateChange}
-                >
+                <PinchGestureHandler onGestureEvent={onZoomEvent}>
                     <Animated.Image
                         style={[styles.image, { transform: [{ scale: scale }] }]}
                         source={{ uri: imageUrl }}
@@ -61,27 +42,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     modalContent: {
-        padding: 5,
-        borderRadius: 10,
-        borderColor: '#1d548b',
-        borderWidth: 1,
-        backgroundColor: 'white',
         justifyContent: 'center',
         alignItems: 'center',
-        width: width - 30,
-    },
-    modalCloseIcon: {
-        color: '#1e89de',
-        zIndex: 1,
-        position: 'absolute',
-        top: 0,
-        right: 0,
-        backgroundColor: '#fff',
-        borderRadius: 20,
     },
     image: {
         width: width - 45,
-        height: 250,
+        height: 300,
         borderRadius: 10,
     },
 });
