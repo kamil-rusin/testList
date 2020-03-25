@@ -5,13 +5,7 @@ import QRScannerScreen from './QRScannerScreen';
 import SplashScreen from 'react-native-splash-screen';
 import WebContentScreen from './WebContentScreen';
 import MainAppScreen from './MainAppScreen';
-import ImageModalComponent from '../components/ImageModalComponent';
-
-const ModalScreen = ({ route }) => {
-    const { url } = route.params;
-
-    return <ImageModalComponent imageUrl={url} />;
-};
+import ModalScreen from './ModalScreen';
 
 const Stack = createStackNavigator();
 
