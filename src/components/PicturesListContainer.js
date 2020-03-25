@@ -5,6 +5,9 @@ import PicturesListComponent from './PicturesListComponent';
 import fetchDataAction from '../redux/actions/fetchData';
 import filterDataAction from '../redux/actions/filterData';
 import TextFilterElement from './TextFilterElement';
+import { Image, TouchableOpacity } from 'react-native';
+import { QR_CODE } from '../constants/Images';
+import { imageStyles } from '../styles/imageStyles';
 import ImageModalComponent from './ImageModalComponent';
 
 const getSearchKey = (state) => state.listReducer.searchKey;
@@ -15,14 +18,27 @@ const getListError = (state) => state.listReducer.error;
 
 const PictureListContainer = (props) => {
     const [sort, setSort] = useState(false);
-    const [modalOpen, setModalOpen] = useState(false);
-    const [modalUrl, setModalUrl] = useState('');
     const searchKey = useSelector(getSearchKey);
     const dataToFilter = useSelector(getDataToFilter);
     const listData = useSelector(getListData);
     const listPending = useSelector(getListPending);
     const listError = useSelector(getListError);
     const dispatch = useDispatch();
+    const { nav } = props;
+
+    React.useLayoutEffect(() => {
+        nav.setOptions({
+            headerRight: () => (
+                <TouchableOpacity
+                    onPress={() => {
+                        nav.push('QRScanner');
+                    }}
+                >
+                    <Image style={imageStyles.headerImage} source={QR_CODE} />
+                </TouchableOpacity>
+            ),
+        });
+    }, [nav]);
 
     const handleChange = useCallback(
         (text) => {
@@ -47,7 +63,11 @@ const PictureListContainer = (props) => {
             };
         } else if (key === 'author') {
             compareValues = (first, second) => {
-                return first.author > second.author ? 1 : -1;
+                if (first.author > second.author) {
+                    return 1;
+                } else if (first.author < second.author) {
+                    return -1;
+                } else return first.id - second.id;
             };
         }
 
@@ -55,7 +75,7 @@ const PictureListContainer = (props) => {
     };
 
     const loadInBrowser = (url) => {
-        props.nav.push('WebContent', { url: url });
+        nav.push('WebContent', { url: url });
     };
 
     const loadModal = (url) => {
