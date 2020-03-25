@@ -1,12 +1,12 @@
 import React from 'react';
-import { StyleSheet, View, Modal, Animated, Dimensions } from 'react-native';
+import { StyleSheet, View, Animated, Dimensions } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { PinchGestureHandler, State } from 'react-native-gesture-handler';
 
 const { width } = Dimensions.get('window');
 
 const ImageModalComponent = (props) => {
-    const { isOpened, url, setIsOpened } = props;
+    const { imageUrl, navigation } = props;
     const scale = new Animated.Value(1);
 
     const onZoomEvent = Animated.event(
@@ -31,33 +31,26 @@ const ImageModalComponent = (props) => {
     };
 
     return (
-        <Modal
-            visible={isOpened}
-            animationType='slide'
-            transparent={true}
-            onRequestClose={() => setIsOpened(false)}
-        >
-            <View style={styles.container}>
-                <View style={styles.modalContent}>
-                    <MaterialCommunityIcons
-                        style={styles.modalCloseIcon}
-                        name='close-circle'
-                        size={32}
-                        onPress={() => setIsOpened(false)}
+        <View style={styles.container}>
+            <View style={styles.modalContent}>
+                <MaterialCommunityIcons
+                    style={styles.modalCloseIcon}
+                    name='close-circle'
+                    size={32}
+                    onPress={() => navigation.goBack()}
+                />
+                <PinchGestureHandler
+                    onGestureEvent={onZoomEvent}
+                    onHandlerStateChange={onZoomStateChange}
+                >
+                    <Animated.Image
+                        style={[styles.image, { transform: [{ scale: scale }] }]}
+                        source={{ uri: imageUrl }}
+                        resizeMode='contain'
                     />
-                    <PinchGestureHandler
-                        onGestureEvent={onZoomEvent}
-                        onHandlerStateChange={onZoomStateChange}
-                    >
-                        <Animated.Image
-                            style={[styles.image, { transform: [{ scale: scale }] }]}
-                            source={{ uri: url }}
-                            resizeMode='contain'
-                        />
-                    </PinchGestureHandler>
-                </View>
+                </PinchGestureHandler>
             </View>
-        </Modal>
+        </View>
     );
 };
 

@@ -3,14 +3,13 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Badge } from 'react-native-elements';
 
 const PictureItemComponent = (props) => {
-    const { loadInBrowser, item, setModalUrl, setModalOpen } = props;
+    const { loadInBrowser, item, loadModal } = props;
 
     return (
         <View style={styles.listItem}>
             <TouchableOpacity
                 onPress={() => {
-                    setModalUrl(item.download_url);
-                    setModalOpen(true);
+                    loadModal(item.download_url);
                 }}
             >
                 <Image style={styles.image} source={{ uri: item.download_url }} />

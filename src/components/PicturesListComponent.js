@@ -13,8 +13,7 @@ const PicturesListComponent = (props) => {
         sortDataByParam,
         loadInBrowser,
         handleSort,
-        setModalUrl,
-        setModalOpen,
+        loadModal,
     } = props;
 
     return (
@@ -28,8 +27,7 @@ const PicturesListComponent = (props) => {
                     <PictureItemComponent
                         loadInBrowser={loadInBrowser}
                         item={item}
-                        setModalUrl={setModalUrl}
-                        setModalOpen={setModalOpen}
+                        loadModal={loadModal}
                     />
                 )}
                 keyExtractor={(item) => item.id}

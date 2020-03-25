@@ -58,9 +58,12 @@ const PictureListContainer = (props) => {
         props.nav.push('WebContent', { url: url });
     };
 
+    const loadModal = (url) => {
+        props.nav.push('Modal', { url: url });
+    };
+
     return (
         <>
-            <ImageModalComponent isOpened={modalOpen} setIsOpened={setModalOpen} url={modalUrl} />
             <TextFilterElement searchKey={searchKey} handleChange={handleChange} />
             <PicturesListComponent
                 fetchData={fetchData}
@@ -70,8 +73,7 @@ const PictureListContainer = (props) => {
                 error={listError}
                 pending={listPending}
                 loadInBrowser={loadInBrowser}
-                setModalUrl={setModalUrl}
-                setModalOpen={setModalOpen}
+                loadModal={loadModal}
             />
         </>
     );
