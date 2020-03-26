@@ -40,6 +40,8 @@ target 'testList' do
 
   pod 'react-native-camera', :path => '../node_modules/react-native-camera'
 
+  pod 'RNReanimated', :path => '../node_modules/react-native-reanimated'
+
   target 'testListTests' do
     inherit! :search_paths
     # Pods for testing

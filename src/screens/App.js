@@ -5,6 +5,7 @@ import QRScannerScreen from './QRScannerScreen';
 import SplashScreen from 'react-native-splash-screen';
 import WebContentScreen from './WebContentScreen';
 import MainAppScreen from './MainAppScreen';
+import ModalScreen from './ModalScreen';
 
 const Stack = createStackNavigator();
 
@@ -19,6 +20,7 @@ const App: () => React$Node = () => {
                 <Stack.Screen name='MainApp' component={MainAppScreen} />
                 <Stack.Screen name='WebContent' component={WebContentScreen} />
                 <Stack.Screen name='QRScanner' component={QRScannerScreen} />
+                <Stack.Screen name='Modal' component={ModalScreen} />
             </Stack.Navigator>
         </NavigationContainer>
     );

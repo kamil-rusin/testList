@@ -8,6 +8,7 @@ import TextFilterElement from './TextFilterElement';
 import { Image, TouchableOpacity } from 'react-native';
 import { QR_CODE } from '../constants/Images';
 import { imageStyles } from '../styles/imageStyles';
+import ImageModalComponent from './ImageModalComponent';
 
 const getSearchKey = (state) => state.listReducer.searchKey;
 const getDataToFilter = (state) => state.listReducer.data;
@@ -77,6 +78,10 @@ const PictureListContainer = (props) => {
         nav.push('WebContent', { url: url });
     };
 
+    const loadModal = (url) => {
+        props.nav.push('Modal', { url: url });
+    };
+
     return (
         <>
             <TextFilterElement searchKey={searchKey} handleChange={handleChange} />
@@ -88,6 +93,7 @@ const PictureListContainer = (props) => {
                 error={listError}
                 pending={listPending}
                 loadInBrowser={loadInBrowser}
+                loadModal={loadModal}
             />
         </>
     );
