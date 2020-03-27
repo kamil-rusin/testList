@@ -9,16 +9,18 @@ import { Image, TouchableOpacity } from 'react-native';
 import { QR_CODE } from '../constants/Images';
 import { imageStyles } from '../styles/styles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { updateIsGridEnabled } from '../redux/actions/actionCreators';
 
 const getSearchKey = (state) => state.listReducer.searchKey;
 const getDataToFilter = (state) => state.listReducer.data;
 const getListData = (state) => state.listReducer.filteredData;
 const getListPending = (state) => state.listReducer.pending;
 const getListError = (state) => state.listReducer.error;
+const getIsGridEnabled = (state) => state.listReducer.isGridEnabled;
 
 const PictureListContainer = (props) => {
     const [sort, setSort] = useState(false);
-    const [isGridEnabled, setIsGridEnabled] = useState(false);
+    const isGridEnabled = useSelector(getIsGridEnabled);
     const searchKey = useSelector(getSearchKey);
     const dataToFilter = useSelector(getDataToFilter);
     const listData = useSelector(getListData);
@@ -41,14 +43,14 @@ const PictureListContainer = (props) => {
             headerLeft: () => (
                 <TouchableOpacity
                     onPress={() => {
-                        setIsGridEnabled(!isGridEnabled);
+                        dispatch(updateIsGridEnabled(!isGridEnabled));
                     }}
                 >
                     <MaterialCommunityIcons size={32} style={imageStyles.headerImage} name='grid' />
                 </TouchableOpacity>
             ),
         });
-    }, [isGridEnabled, nav]);
+    }, [dispatch, isGridEnabled, nav]);
 
     const handleChange = useCallback(
         (text) => {

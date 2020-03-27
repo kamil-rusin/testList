@@ -3,6 +3,7 @@ import {
     FETCH_DATA_PENDING,
     FETCH_DATA_SUCCESS,
     FILTER_DATA,
+    UPDATE_IS_GRID_ENABLED,
     UPDATE_SEARCH_KEY,
 } from './types';
 
@@ -37,5 +38,12 @@ export const updateSearchKey = (key) => {
     return {
         type: UPDATE_SEARCH_KEY,
         searchKey: key,
+    };
+};
+
+export const updateIsGridEnabled = (value) => {
+    return {
+        type: UPDATE_IS_GRID_ENABLED,
+        isGridEnabled: value,
     };
 };
