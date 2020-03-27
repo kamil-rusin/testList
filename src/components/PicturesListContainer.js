@@ -96,6 +96,7 @@ const PictureListContainer = (props) => {
         <>
             <TextFilterElement searchKey={searchKey} handleChange={handleChange} />
             <PicturesListComponent
+                gridListFormat={gridListFormat}
                 fetchData={fetchData}
                 sortDataByParam={(arg) => sortDataByParam(arg)}
                 handleSort={() => setSort(!sort)}

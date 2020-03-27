@@ -1,8 +1,18 @@
 import React from 'react';
-import { FlatList, StyleSheet, View, TouchableOpacity, Text, RefreshControl } from 'react-native';
+import {
+    FlatList,
+    StyleSheet,
+    View,
+    TouchableOpacity,
+    Text,
+    RefreshControl,
+    Dimensions,
+} from 'react-native';
 import PictureItemComponent from './PictureItemComponent';
 import ErrorElement from './ErrorElement';
 import EmptyListComponent from './EmptyListComponent';
+
+const numberOfColumns = () => Math.floor((Dimensions.get('window').width - 10) / 95);
 
 const PicturesListComponent = (props) => {
     const {
@@ -14,6 +24,7 @@ const PicturesListComponent = (props) => {
         loadInBrowser,
         handleSort,
         loadModal,
+        gridListFormat,
     } = props;
 
     return (
@@ -22,9 +33,15 @@ const PicturesListComponent = (props) => {
 
             <FlatList
                 data={data}
-                contentContainerStyle={styles.listContainer}
+                key={gridListFormat}
+                numColumns={gridListFormat ? numberOfColumns() : 1}
+                contentContainerStyle={[
+                    styles.listContainer,
+                    { alignItems: gridListFormat ? 'center' : 'stretch' },
+                ]}
                 renderItem={({ item }) => (
                     <PictureItemComponent
+                        gridListFormat={gridListFormat}
                         loadInBrowser={loadInBrowser}
                         item={item}
                         loadModal={loadModal}
