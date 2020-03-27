@@ -7,7 +7,7 @@ import filterDataAction from '../redux/actions/filterData';
 import TextFilterElement from './TextFilterElement';
 import { Image, TouchableOpacity } from 'react-native';
 import { QR_CODE } from '../constants/Images';
-import { imageStyles } from '../styles/imageStyles';
+import { imageStyles } from '../styles/styles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const getSearchKey = (state) => state.listReducer.searchKey;

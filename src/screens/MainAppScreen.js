@@ -1,6 +1,6 @@
 import React from 'react';
 import { SafeAreaView } from 'react-native';
-import { safeAreaViewStyle } from '../styles/safeAreaViewStyle';
+import { safeAreaViewStyle } from '../styles/styles';
 import PicturesListContainer from '../components/PicturesListContainer';
 
 const MainAppScreen = ({ navigation }) => {

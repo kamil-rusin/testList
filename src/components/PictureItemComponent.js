@@ -1,6 +1,7 @@
 import React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Badge } from 'react-native-elements';
+import { determineImageStyle } from '../styles/styles';
 
 const PictureItemComponent = (props) => {
     const { loadInBrowser, item, loadModal, isGridEnabled, imageResolution } = props;
@@ -13,13 +14,7 @@ const PictureItemComponent = (props) => {
                 }}
             >
                 <Image
-                    style={[
-                        styles.image,
-                        {
-                            width: isGridEnabled ? imageResolution : 80,
-                            height: isGridEnabled ? imageResolution : 80,
-                        },
-                    ]}
+                    style={determineImageStyle(isGridEnabled, imageResolution)}
                     source={{ uri: item.download_url }}
                 />
             </TouchableOpacity>
@@ -62,10 +57,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         marginBottom: 2,
         marginRight: 10,
-    },
-    image: {
-        margin: 5,
-        borderRadius: 10,
     },
     author: {
         fontSize: 18,

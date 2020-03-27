@@ -11,6 +11,7 @@ import {
 import PictureItemComponent from './PictureItemComponent';
 import ErrorElement from './ErrorElement';
 import EmptyListComponent from './EmptyListComponent';
+import { determineFlatListStyle } from '../styles/styles';
 
 const getImageResolution = () => Math.floor((Dimensions.get('screen').width - 70) / 3);
 
@@ -36,10 +37,7 @@ const PicturesListComponent = (props) => {
                 data={data}
                 key={isGridEnabled}
                 numColumns={isGridEnabled ? 3 : 1}
-                contentContainerStyle={[
-                    styles.listContainer,
-                    { alignItems: isGridEnabled ? 'center' : 'stretch' },
-                ]}
+                contentContainerStyle={determineFlatListStyle(isGridEnabled)}
                 renderItem={({ item }) => (
                     <PictureItemComponent
                         imageResolution={imageResolution}
@@ -107,10 +105,6 @@ const styles = StyleSheet.create({
     buttonTitle: {
         fontSize: 14,
         color: 'white',
-    },
-    listContainer: {
-        display: 'flex',
-        flexGrow: 1,
     },
 });
 
