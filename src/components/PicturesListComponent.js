@@ -12,7 +12,7 @@ import PictureItemComponent from './PictureItemComponent';
 import ErrorElement from './ErrorElement';
 import EmptyListComponent from './EmptyListComponent';
 
-const numberOfColumns = () => Math.floor((Dimensions.get('window').width - 10) / 95);
+const getImageResolution = () => Math.floor((Dimensions.get('screen').width - 70) / 3);
 
 const PicturesListComponent = (props) => {
     const {
@@ -24,8 +24,9 @@ const PicturesListComponent = (props) => {
         loadInBrowser,
         handleSort,
         loadModal,
-        gridListFormat,
+        isGridEnabled,
     } = props;
+    const imageResolution = getImageResolution();
 
     return (
         <>
@@ -33,15 +34,16 @@ const PicturesListComponent = (props) => {
 
             <FlatList
                 data={data}
-                key={gridListFormat}
-                numColumns={gridListFormat ? numberOfColumns() : 1}
+                key={isGridEnabled}
+                numColumns={isGridEnabled ? 3 : 1}
                 contentContainerStyle={[
                     styles.listContainer,
-                    { alignItems: gridListFormat ? 'center' : 'stretch' },
+                    { alignItems: isGridEnabled ? 'center' : 'stretch' },
                 ]}
                 renderItem={({ item }) => (
                     <PictureItemComponent
-                        gridListFormat={gridListFormat}
+                        imageResolution={imageResolution}
+                        isGridEnabled={isGridEnabled}
                         loadInBrowser={loadInBrowser}
                         item={item}
                         loadModal={loadModal}

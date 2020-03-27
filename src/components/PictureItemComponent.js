@@ -3,7 +3,7 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Badge } from 'react-native-elements';
 
 const PictureItemComponent = (props) => {
-    const { loadInBrowser, item, loadModal, gridListFormat } = props;
+    const { loadInBrowser, item, loadModal, isGridEnabled, imageResolution } = props;
 
     return (
         <View style={styles.listItem}>
@@ -12,10 +12,19 @@ const PictureItemComponent = (props) => {
                     loadModal(item.download_url);
                 }}
             >
-                <Image style={styles.image} source={{ uri: item.download_url }} />
+                <Image
+                    style={[
+                        styles.image,
+                        {
+                            width: isGridEnabled ? imageResolution : 80,
+                            height: isGridEnabled ? imageResolution : 80,
+                        },
+                    ]}
+                    source={{ uri: item.download_url }}
+                />
             </TouchableOpacity>
 
-            {!gridListFormat && (
+            {!isGridEnabled && (
                 <View style={styles.detailsContainer}>
                     <View style={styles.row}>
                         <Text style={styles.author}>{item.author}</Text>
@@ -55,8 +64,6 @@ const styles = StyleSheet.create({
         marginRight: 10,
     },
     image: {
-        width: 80,
-        height: 80,
         margin: 5,
         borderRadius: 10,
     },

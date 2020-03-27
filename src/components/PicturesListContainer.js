@@ -18,7 +18,7 @@ const getListError = (state) => state.listReducer.error;
 
 const PictureListContainer = (props) => {
     const [sort, setSort] = useState(false);
-    const [gridListFormat, setGridListFormat] = useState(false);
+    const [isGridEnabled, setIsGridEnabled] = useState(false);
     const searchKey = useSelector(getSearchKey);
     const dataToFilter = useSelector(getDataToFilter);
     const listData = useSelector(getListData);
@@ -41,14 +41,14 @@ const PictureListContainer = (props) => {
             headerLeft: () => (
                 <TouchableOpacity
                     onPress={() => {
-                        setGridListFormat(!gridListFormat);
+                        setIsGridEnabled(!isGridEnabled);
                     }}
                 >
                     <MaterialCommunityIcons size={32} style={imageStyles.headerImage} name='grid' />
                 </TouchableOpacity>
             ),
         });
-    }, [gridListFormat, nav]);
+    }, [isGridEnabled, nav]);
 
     const handleChange = useCallback(
         (text) => {
@@ -96,7 +96,7 @@ const PictureListContainer = (props) => {
         <>
             <TextFilterElement searchKey={searchKey} handleChange={handleChange} />
             <PicturesListComponent
-                gridListFormat={gridListFormat}
+                isGridEnabled={isGridEnabled}
                 fetchData={fetchData}
                 sortDataByParam={(arg) => sortDataByParam(arg)}
                 handleSort={() => setSort(!sort)}
