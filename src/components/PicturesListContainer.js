@@ -8,7 +8,7 @@ import TextFilterElement from './TextFilterElement';
 import { Image, TouchableOpacity } from 'react-native';
 import { QR_CODE } from '../constants/Images';
 import { imageStyles } from '../styles/imageStyles';
-import ImageModalComponent from './ImageModalComponent';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const getSearchKey = (state) => state.listReducer.searchKey;
 const getDataToFilter = (state) => state.listReducer.data;
@@ -18,6 +18,7 @@ const getListError = (state) => state.listReducer.error;
 
 const PictureListContainer = (props) => {
     const [sort, setSort] = useState(false);
+    const [gridListFormat, setGridListFormat] = useState(false);
     const searchKey = useSelector(getSearchKey);
     const dataToFilter = useSelector(getDataToFilter);
     const listData = useSelector(getListData);
@@ -37,8 +38,17 @@ const PictureListContainer = (props) => {
                     <Image style={imageStyles.headerImage} source={QR_CODE} />
                 </TouchableOpacity>
             ),
+            headerLeft: () => (
+                <TouchableOpacity
+                    onPress={() => {
+                        setGridListFormat(!gridListFormat);
+                    }}
+                >
+                    <MaterialCommunityIcons size={32} style={imageStyles.headerImage} name='grid' />
+                </TouchableOpacity>
+            ),
         });
-    }, [nav]);
+    }, [gridListFormat, nav]);
 
     const handleChange = useCallback(
         (text) => {
