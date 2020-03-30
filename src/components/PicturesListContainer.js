@@ -9,7 +9,11 @@ import { Image, TouchableOpacity } from 'react-native';
 import { QR_CODE } from '../constants/Images';
 import { imageStyles } from '../styles/styles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { updateIsGridEnabled, addFavouriteItem, removeFavouriteItem} from '../redux/actions/actionCreators';
+import {
+    updateIsGridEnabled,
+    addFavouriteItem,
+    removeFavouriteItem,
+} from '../redux/actions/actionCreators';
 
 const getSearchKey = (state) => state.listReducer.searchKey;
 const getDataToFilter = (state) => state.listReducer.data;

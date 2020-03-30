@@ -40,10 +40,18 @@ const PicturesListComponent = (props) => {
                 item={item}
                 loadModal={loadModal}
                 handleFavouriteItem={handleFavouriteItem}
-                isFavourite={favouriteItems.includes(item.id)}
+                isFavourite={true}
+                //isFavourite={favouriteItems.includes(item.id)}
             />
         ),
-        [imageResolution, loadInBrowser, isGridEnabled, loadModal, handleFavouriteItem,favouriteItems],
+        [
+            imageResolution,
+            loadInBrowser,
+            isGridEnabled,
+            loadModal,
+            handleFavouriteItem,
+            favouriteItems,
+        ],
     );
 
     return (
