@@ -1,34 +1,46 @@
 import React from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Badge } from 'react-native-elements';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const PictureItemComponent = (props) => {
-    const { loadInBrowser, item, loadModal } = props;
+    const { loadInBrowser, item, loadModal, isFavourite, handleFavouriteItem } = props;
 
     return (
-        <View style={styles.listItem}>
-            <TouchableOpacity
-                onPress={() => {
-                    loadModal(item.download_url);
-                }}
-            >
-                <Image style={styles.image} source={{ uri: item.download_url }} />
-            </TouchableOpacity>
+        <TouchableOpacity onLongPress={() => handleFavouriteItem(item.id)}>
+            <View style={styles.listItem}>
+                <TouchableOpacity
+                    onPress={() => {
+                        loadModal(item.download_url);
+                    }}
+                >
+                    <ImageBackground style={styles.image} source={{ uri: item.download_url }}>
+                        {isFavourite && (
+                            <MaterialCommunityIcons
+                                size={18}
+                                name={'star'}
+                                color={'#ffd70a'}
+                                style={styles.starIcon}
+                            />
+                        )}
+                    </ImageBackground>
+                </TouchableOpacity>
 
-            <View style={styles.detailsContainer}>
-                <View style={styles.row}>
-                    <Text style={styles.author}>{item.author}</Text>
-                    <Badge
-                        containerStyle={styles.badge}
-                        badgeStyle={styles.badgeStyle}
-                        value={item.id}
-                    />
+                <View style={styles.detailsContainer}>
+                    <View style={styles.row}>
+                        <Text style={styles.author}>{item.author}</Text>
+                        <Badge
+                            containerStyle={styles.badge}
+                            badgeStyle={styles.badgeStyle}
+                            value={item.id}
+                        />
+                    </View>
+                    <Text onPress={() => loadInBrowser(item.url)} style={styles.website}>
+                        Url: {item.url}
+                    </Text>
                 </View>
-                <Text onPress={() => loadInBrowser(item.url)} style={styles.website}>
-                    Url: {item.url}
-                </Text>
             </View>
-        </View>
+        </TouchableOpacity>
     );
 };
 
@@ -74,6 +86,11 @@ const styles = StyleSheet.create({
     website: {
         fontSize: 13,
         color: '#606060',
+    },
+    starIcon: {
+        position: 'absolute',
+        top: 0,
+        right: 0,
     },
 });
 

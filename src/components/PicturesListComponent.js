@@ -14,6 +14,8 @@ const PicturesListComponent = (props) => {
         loadInBrowser,
         handleSort,
         loadModal,
+        favouriteItems,
+        handleFavouriteItem,
     } = props;
 
     return (
@@ -28,6 +30,8 @@ const PicturesListComponent = (props) => {
                         loadInBrowser={loadInBrowser}
                         item={item}
                         loadModal={loadModal}
+                        handleFavouriteItem={handleFavouriteItem}
+                        isFavourite={favouriteItems.includes(item.id)}
                     />
                 )}
                 keyExtractor={(item) => item.id}
