@@ -1,6 +1,6 @@
 import React from 'react';
 import ImageModalComponent from '../components/ImageModalComponent';
-import { safeAreaViewStyle } from '../styles/safeAreaViewStyle';
+import { safeAreaViewStyle } from '../styles/styles';
 import { SafeAreaView } from 'react-native';
 
 const ModalScreen = ({ route }) => {
