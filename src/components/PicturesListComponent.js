@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useMemo } from 'react';
 import {
     FlatList,
     StyleSheet,
@@ -27,7 +27,20 @@ const PicturesListComponent = (props) => {
         loadModal,
         isGridEnabled,
     } = props;
-    const imageResolution = getImageResolution();
+    const imageResolution = useMemo(() => getImageResolution(), []);
+
+    const renderItem = useCallback(
+        ({ item }) => (
+            <PictureItemComponent
+                imageResolution={imageResolution}
+                isGridEnabled={isGridEnabled}
+                loadInBrowser={loadInBrowser}
+                item={item}
+                loadModal={loadModal}
+            />
+        ),
+        [imageResolution, loadInBrowser, isGridEnabled, loadModal],
+    );
 
     return (
         <>
@@ -38,15 +51,7 @@ const PicturesListComponent = (props) => {
                 key={isGridEnabled}
                 numColumns={isGridEnabled ? 3 : 1}
                 contentContainerStyle={determineFlatListStyle(isGridEnabled)}
-                renderItem={({ item }) => (
-                    <PictureItemComponent
-                        imageResolution={imageResolution}
-                        isGridEnabled={isGridEnabled}
-                        loadInBrowser={loadInBrowser}
-                        item={item}
-                        loadModal={loadModal}
-                    />
-                )}
+                renderItem={renderItem}
                 keyExtractor={(item) => item.id}
                 ListEmptyComponent={!pending && <EmptyListComponent />}
                 refreshControl={
