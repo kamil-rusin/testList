@@ -4,6 +4,8 @@ import {
     FETCH_DATA_PENDING,
     FILTER_DATA,
     UPDATE_SEARCH_KEY,
+    ADD_FAVOURITE_ITEM,
+    REMOVE_FAVOURITE_ITEM,
 } from '../actions/types';
 
 const initialState = {
@@ -12,6 +14,7 @@ const initialState = {
     error: null,
     filteredData: [],
     searchKey: '',
+    favouriteItems: [],
 };
 
 const listReducer = (state = initialState, action) => {
@@ -45,6 +48,16 @@ const listReducer = (state = initialState, action) => {
             return {
                 ...state,
                 filteredData: action.data,
+            };
+        case ADD_FAVOURITE_ITEM:
+            return {
+                ...state,
+                favouriteItems: [...state.favouriteItems, action.id],
+            };
+        case REMOVE_FAVOURITE_ITEM:
+            return {
+                ...state,
+                favouriteItems: state.favouriteItems.filter((itemId) => itemId !== action.id),
             };
         default:
             return state;
