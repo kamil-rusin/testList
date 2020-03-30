@@ -1,8 +1,19 @@
-import React from 'react';
-import { FlatList, StyleSheet, View, TouchableOpacity, Text, RefreshControl } from 'react-native';
+import React, { useCallback, useMemo } from 'react';
+import {
+    FlatList,
+    StyleSheet,
+    View,
+    TouchableOpacity,
+    Text,
+    RefreshControl,
+    Dimensions,
+} from 'react-native';
 import PictureItemComponent from './PictureItemComponent';
 import ErrorElement from './ErrorElement';
 import EmptyListComponent from './EmptyListComponent';
+import { determineFlatListStyle } from '../styles/styles';
+
+const getImageResolution = () => Math.floor((Dimensions.get('screen').width - 70) / 3);
 
 const PicturesListComponent = (props) => {
     const {
@@ -14,9 +25,26 @@ const PicturesListComponent = (props) => {
         loadInBrowser,
         handleSort,
         loadModal,
+        isGridEnabled,
         favouriteItems,
         handleFavouriteItem,
     } = props;
+    const imageResolution = useMemo(() => getImageResolution(), []);
+
+    const renderItem = useCallback(
+        ({ item }) => (
+            <PictureItemComponent
+                imageResolution={imageResolution}
+                isGridEnabled={isGridEnabled}
+                loadInBrowser={loadInBrowser}
+                item={item}
+                loadModal={loadModal}
+                handleFavouriteItem={handleFavouriteItem}
+                isFavourite={favouriteItems.includes(item.id)}
+            />
+        ),
+        [imageResolution, loadInBrowser, isGridEnabled, loadModal, handleFavouriteItem,favouriteItems],
+    );
 
     return (
         <>
@@ -24,16 +52,10 @@ const PicturesListComponent = (props) => {
 
             <FlatList
                 data={data}
-                contentContainerStyle={styles.listContainer}
-                renderItem={({ item }) => (
-                    <PictureItemComponent
-                        loadInBrowser={loadInBrowser}
-                        item={item}
-                        loadModal={loadModal}
-                        handleFavouriteItem={handleFavouriteItem}
-                        isFavourite={favouriteItems.includes(item.id)}
-                    />
-                )}
+                key={isGridEnabled}
+                numColumns={isGridEnabled ? 3 : 1}
+                contentContainerStyle={determineFlatListStyle(isGridEnabled)}
+                renderItem={renderItem}
                 keyExtractor={(item) => item.id}
                 ListEmptyComponent={!pending && <EmptyListComponent />}
                 refreshControl={
@@ -92,10 +114,6 @@ const styles = StyleSheet.create({
     buttonTitle: {
         fontSize: 14,
         color: 'white',
-    },
-    listContainer: {
-        display: 'flex',
-        flexGrow: 1,
     },
 });
 

@@ -4,6 +4,7 @@ import {
     FETCH_DATA_PENDING,
     FILTER_DATA,
     UPDATE_SEARCH_KEY,
+    UPDATE_IS_GRID_ENABLED,
     ADD_FAVOURITE_ITEM,
     REMOVE_FAVOURITE_ITEM,
 } from '../actions/types';
@@ -14,6 +15,7 @@ const initialState = {
     error: null,
     filteredData: [],
     searchKey: '',
+    isGridEnabled: false,
     favouriteItems: [],
 };
 
@@ -48,6 +50,11 @@ const listReducer = (state = initialState, action) => {
             return {
                 ...state,
                 filteredData: action.data,
+            };
+        case UPDATE_IS_GRID_ENABLED:
+            return {
+                ...state,
+                isGridEnabled: action.isGridEnabled,
             };
         case ADD_FAVOURITE_ITEM:
             return {

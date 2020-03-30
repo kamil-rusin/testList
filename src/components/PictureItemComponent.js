@@ -2,30 +2,32 @@ import React from 'react';
 import { ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Badge } from 'react-native-elements';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { determineImageStyle } from '../styles/styles';
 
 const PictureItemComponent = (props) => {
-    const { loadInBrowser, item, loadModal, isFavourite, handleFavouriteItem } = props;
+    const { loadInBrowser, item, loadModal, isGridEnabled, imageResolution, isFavourite, handleFavouriteItem } = props;
 
     return (
-        <TouchableOpacity onLongPress={() => handleFavouriteItem(item.id)}>
-            <View style={styles.listItem}>
-                <TouchableOpacity
-                    onPress={() => {
-                        loadModal(item.download_url);
-                    }}
-                >
-                    <ImageBackground style={styles.image} source={{ uri: item.download_url }}>
-                        {isFavourite && (
-                            <MaterialCommunityIcons
-                                size={18}
-                                name={'star'}
-                                color={'#ffd70a'}
-                                style={styles.starIcon}
-                            />
-                        )}
-                    </ImageBackground>
-                </TouchableOpacity>
+      <TouchableOpacity onLongPress={() => handleFavouriteItem(item.id)}>
+        <View style={styles.listItem}>
+            <TouchableOpacity
+                onPress={() => {
+                    loadModal(item.download_url);
+                }}
+            >
+              <ImageBackground style={determineImageStyle(isGridEnabled, imageResolution)} source={{ uri: item.download_url }}>
+                {isFavourite && (
+                  <MaterialCommunityIcons
+                    size={18}
+                    name={'star'}
+                    color={'#ffd70a'}
+                    style={styles.starIcon}
+                  />
+                )}
+              </ImageBackground>
+            </TouchableOpacity>
 
+            {!isGridEnabled && (
                 <View style={styles.detailsContainer}>
                     <View style={styles.row}>
                         <Text style={styles.author}>{item.author}</Text>
@@ -39,8 +41,9 @@ const PictureItemComponent = (props) => {
                         Url: {item.url}
                     </Text>
                 </View>
-            </View>
-        </TouchableOpacity>
+            )}
+        </View>
+      </TouchableOpacity>
     );
 };
 
@@ -63,12 +66,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         marginBottom: 2,
         marginRight: 10,
-    },
-    image: {
-        width: 80,
-        height: 80,
-        margin: 5,
-        borderRadius: 10,
     },
     author: {
         fontSize: 18,

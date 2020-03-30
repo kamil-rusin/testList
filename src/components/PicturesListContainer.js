@@ -7,19 +7,21 @@ import filterDataAction from '../redux/actions/filterData';
 import TextFilterElement from './TextFilterElement';
 import { Image, TouchableOpacity } from 'react-native';
 import { QR_CODE } from '../constants/Images';
-import { imageStyles } from '../styles/imageStyles';
-import ImageModalComponent from './ImageModalComponent';
-import { addFavouriteItem, removeFavouriteItem } from '../redux/actions/actionCreators';
+import { imageStyles } from '../styles/styles';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { updateIsGridEnabled, addFavouriteItem, removeFavouriteItem} from '../redux/actions/actionCreators';
 
 const getSearchKey = (state) => state.listReducer.searchKey;
 const getDataToFilter = (state) => state.listReducer.data;
 const getListData = (state) => state.listReducer.filteredData;
 const getListPending = (state) => state.listReducer.pending;
 const getListError = (state) => state.listReducer.error;
+const getIsGridEnabled = (state) => state.listReducer.isGridEnabled;
 const getFavouriteItems = (state) => state.listReducer.favouriteItems;
 
 const PicturesListContainer = (props) => {
     const [sort, setSort] = useState(false);
+    const isGridEnabled = useSelector(getIsGridEnabled);
     const searchKey = useSelector(getSearchKey);
     const dataToFilter = useSelector(getDataToFilter);
     const listData = useSelector(getListData);
@@ -40,8 +42,17 @@ const PicturesListContainer = (props) => {
                     <Image style={imageStyles.headerImage} source={QR_CODE} />
                 </TouchableOpacity>
             ),
+            headerLeft: () => (
+                <TouchableOpacity
+                    onPress={() => {
+                        dispatch(updateIsGridEnabled(!isGridEnabled));
+                    }}
+                >
+                    <MaterialCommunityIcons size={32} style={imageStyles.headerImage} name='grid' />
+                </TouchableOpacity>
+            ),
         });
-    }, [nav]);
+    }, [dispatch, isGridEnabled, nav]);
 
     const handleChange = useCallback(
         (text) => {
@@ -100,6 +111,7 @@ const PicturesListContainer = (props) => {
         <>
             <TextFilterElement searchKey={searchKey} handleChange={handleChange} />
             <PicturesListComponent
+                isGridEnabled={isGridEnabled}
                 fetchData={fetchData}
                 sortDataByParam={(arg) => sortDataByParam(arg)}
                 handleSort={() => setSort(!sort)}

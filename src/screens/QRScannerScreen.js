@@ -2,7 +2,7 @@ import React from 'react';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import { Alert, SafeAreaView, StyleSheet, View } from 'react-native';
 import { useIsFocused } from '@react-navigation/native';
-import { safeAreaViewStyle } from '../styles/safeAreaViewStyle';
+import { safeAreaViewStyle } from '../styles/styles';
 
 const QRScannerScreen = ({ navigation }) => {
     const isFocused = useIsFocused();
