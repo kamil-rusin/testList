@@ -1,9 +1,10 @@
 import React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Badge } from 'react-native-elements';
+import { determineImageStyle } from '../styles/styles';
 
 const PictureItemComponent = (props) => {
-    const { loadInBrowser, item, loadModal } = props;
+    const { loadInBrowser, item, loadModal, isGridEnabled, imageResolution } = props;
 
     return (
         <View style={styles.listItem}>
@@ -12,22 +13,27 @@ const PictureItemComponent = (props) => {
                     loadModal(item.download_url);
                 }}
             >
-                <Image style={styles.image} source={{ uri: item.download_url }} />
+                <Image
+                    style={determineImageStyle(isGridEnabled, imageResolution)}
+                    source={{ uri: item.download_url }}
+                />
             </TouchableOpacity>
 
-            <View style={styles.detailsContainer}>
-                <View style={styles.row}>
-                    <Text style={styles.author}>{item.author}</Text>
-                    <Badge
-                        containerStyle={styles.badge}
-                        badgeStyle={styles.badgeStyle}
-                        value={item.id}
-                    />
+            {!isGridEnabled && (
+                <View style={styles.detailsContainer}>
+                    <View style={styles.row}>
+                        <Text style={styles.author}>{item.author}</Text>
+                        <Badge
+                            containerStyle={styles.badge}
+                            badgeStyle={styles.badgeStyle}
+                            value={item.id}
+                        />
+                    </View>
+                    <Text onPress={() => loadInBrowser(item.url)} style={styles.website}>
+                        Url: {item.url}
+                    </Text>
                 </View>
-                <Text onPress={() => loadInBrowser(item.url)} style={styles.website}>
-                    Url: {item.url}
-                </Text>
-            </View>
+            )}
         </View>
     );
 };
@@ -51,12 +57,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         marginBottom: 2,
         marginRight: 10,
-    },
-    image: {
-        width: 80,
-        height: 80,
-        margin: 5,
-        borderRadius: 10,
     },
     author: {
         fontSize: 18,

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import ProgressWebView from 'react-native-progress-webview';
 import { Image, Linking, TouchableOpacity } from 'react-native';
 import { LINK_EXTERNAL } from '../constants/Images';
-import { imageStyles } from '../styles/imageStyles';
+import { imageStyles } from '../styles/styles';
 
 const WebContent = (props) => {
     const { pageUrl, navigation } = props;

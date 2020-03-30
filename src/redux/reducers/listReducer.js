@@ -4,6 +4,7 @@ import {
     FETCH_DATA_PENDING,
     FILTER_DATA,
     UPDATE_SEARCH_KEY,
+    UPDATE_IS_GRID_ENABLED,
 } from '../actions/types';
 
 const initialState = {
@@ -12,6 +13,7 @@ const initialState = {
     error: null,
     filteredData: [],
     searchKey: '',
+    isGridEnabled: false,
 };
 
 const listReducer = (state = initialState, action) => {
@@ -45,6 +47,11 @@ const listReducer = (state = initialState, action) => {
             return {
                 ...state,
                 filteredData: action.data,
+            };
+        case UPDATE_IS_GRID_ENABLED:
+            return {
+                ...state,
+                isGridEnabled: action.isGridEnabled,
             };
         default:
             return state;
