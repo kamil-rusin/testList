@@ -9,7 +9,6 @@ const filterData = (searchKey, data, onlyFavourites, favouriteItems) => {
         );
 
         if (onlyFavourites) {
-            console.log('jestem tu');
             const filtered = results.filter((item) => favouriteItems.includes(item.id));
             dispatch(updateFilteredData(filtered));
         } else {
