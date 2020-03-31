@@ -1,6 +1,6 @@
 import { updateFilteredData, updateSearchKey } from './actionCreators';
 
-const filterData = (searchKey, data, onlyFavourites=false, favouriteItems) => {
+const filterData = (searchKey, data, onlyFavourites = false, favouriteItems) => {
     return (dispatch) => {
         dispatch(updateSearchKey(searchKey));
 
