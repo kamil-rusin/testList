@@ -14,9 +14,9 @@ const initialState = {
     data: [],
     error: null,
     filteredData: [],
+    favouriteItems: [],
     searchKey: '',
     isGridEnabled: false,
-    favouriteItems: [],
 };
 
 const listReducer = (state = initialState, action) => {
@@ -59,12 +59,12 @@ const listReducer = (state = initialState, action) => {
         case ADD_FAVOURITE_ITEM:
             return {
                 ...state,
-                favouriteItems: [...state.favouriteItems, action.id],
+                favouriteItems: [...state.favouriteItems, action.itemId],
             };
         case REMOVE_FAVOURITE_ITEM:
             return {
                 ...state,
-                favouriteItems: state.favouriteItems.filter((itemId) => itemId !== action.id),
+                favouriteItems: state.favouriteItems.filter((item) => item !== action.itemId),
             };
         default:
             return state;

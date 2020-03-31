@@ -107,7 +107,6 @@ const PicturesListContainer = (props) => {
                 isIncluded = true;
             }
         }
-
         isIncluded ? dispatch(removeFavouriteItem(id)) : dispatch(addFavouriteItem(id));
     };
 
