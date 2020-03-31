@@ -29,6 +29,7 @@ const PicturesListComponent = (props) => {
         favouriteItems,
         handleFavouriteItem,
         onlyFavourites,
+        handleFavourites,
     } = props;
     const imageResolution = useMemo(() => getImageResolution(), []);
 
@@ -87,7 +88,12 @@ const PicturesListComponent = (props) => {
                     <Text style={styles.buttonTitle}>SORT BY AUTHOR</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.buttonContainer}>
-                    <Text style={styles.buttonTitle}>
+                    <Text
+                        style={styles.buttonTitle}
+                        onPress={() => {
+                            handleFavourites();
+                        }}
+                    >
                         {onlyFavourites ? 'SHOW ALL' : 'SHOW FAVOURITES'}
                     </Text>
                 </TouchableOpacity>

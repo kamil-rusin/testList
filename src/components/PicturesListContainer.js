@@ -62,9 +62,15 @@ const PicturesListContainer = (props) => {
     const handleChange = useCallback(
         (text) => {
             dispatch(filterDataAction(text, dataToFilter));
+            setOnlyFavourites(false);
         },
         [dispatch, dataToFilter],
     );
+
+    const handleFavourites = () => {
+        dispatch(filterDataAction('', dataToFilter, !onlyFavourites, favouriteItems));
+        setOnlyFavourites(!onlyFavourites);
+    };
 
     const fetchData = useCallback(() => {
         dispatch(fetchDataAction());
@@ -123,6 +129,8 @@ const PicturesListContainer = (props) => {
                 favouriteItems={favouriteItems}
                 handleFavouriteItem={handleFavouriteItem}
                 onlyFavourites={onlyFavourites}
+                handleFavourites={handleFavourites}
+                setOnlyFavourites={setOnlyFavourites}
             />
         </>
     );
