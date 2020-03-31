@@ -5,6 +5,8 @@ import {
     FILTER_DATA,
     UPDATE_SEARCH_KEY,
     UPDATE_IS_GRID_ENABLED,
+    ADD_FAVOURITE_ITEM,
+    REMOVE_FAVOURITE_ITEM,
 } from '../actions/types';
 
 const initialState = {
@@ -12,6 +14,7 @@ const initialState = {
     data: [],
     error: null,
     filteredData: [],
+    favouriteItems: [],
     searchKey: '',
     isGridEnabled: false,
 };
@@ -52,6 +55,16 @@ const listReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isGridEnabled: action.isGridEnabled,
+            };
+        case ADD_FAVOURITE_ITEM:
+            return {
+                ...state,
+                favouriteItems: [...state.favouriteItems, action.itemId],
+            };
+        case REMOVE_FAVOURITE_ITEM:
+            return {
+                ...state,
+                favouriteItems: state.favouriteItems.filter((item) => item !== action.itemId),
             };
         default:
             return state;

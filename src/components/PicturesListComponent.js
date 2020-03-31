@@ -26,6 +26,8 @@ const PicturesListComponent = (props) => {
         handleSort,
         loadModal,
         isGridEnabled,
+        favouriteItems,
+        handleFavouriteItem,
     } = props;
     const imageResolution = useMemo(() => getImageResolution(), []);
 
@@ -37,9 +39,18 @@ const PicturesListComponent = (props) => {
                 loadInBrowser={loadInBrowser}
                 item={item}
                 loadModal={loadModal}
+                handleFavouriteItem={handleFavouriteItem}
+                isFavourite={favouriteItems.includes(item.id)}
             />
         ),
-        [imageResolution, loadInBrowser, isGridEnabled, loadModal],
+        [
+            imageResolution,
+            loadInBrowser,
+            isGridEnabled,
+            loadModal,
+            handleFavouriteItem,
+            favouriteItems,
+        ],
     );
 
     return (

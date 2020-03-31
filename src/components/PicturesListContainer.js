@@ -9,7 +9,11 @@ import { Image, TouchableOpacity } from 'react-native';
 import { QR_CODE } from '../constants/Images';
 import { imageStyles } from '../styles/styles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { updateIsGridEnabled } from '../redux/actions/actionCreators';
+import {
+    updateIsGridEnabled,
+    addFavouriteItem,
+    removeFavouriteItem,
+} from '../redux/actions/actionCreators';
 
 const getSearchKey = (state) => state.listReducer.searchKey;
 const getDataToFilter = (state) => state.listReducer.data;
@@ -17,8 +21,9 @@ const getListData = (state) => state.listReducer.filteredData;
 const getListPending = (state) => state.listReducer.pending;
 const getListError = (state) => state.listReducer.error;
 const getIsGridEnabled = (state) => state.listReducer.isGridEnabled;
+const getFavouriteItems = (state) => state.listReducer.favouriteItems;
 
-const PictureListContainer = (props) => {
+const PicturesListContainer = (props) => {
     const [sort, setSort] = useState(false);
     const isGridEnabled = useSelector(getIsGridEnabled);
     const searchKey = useSelector(getSearchKey);
@@ -26,6 +31,7 @@ const PictureListContainer = (props) => {
     const listData = useSelector(getListData);
     const listPending = useSelector(getListPending);
     const listError = useSelector(getListError);
+    const favouriteItems = useSelector(getFavouriteItems);
     const dispatch = useDispatch();
     const { nav } = props;
 
@@ -94,6 +100,12 @@ const PictureListContainer = (props) => {
         props.nav.push('Modal', { url: url });
     };
 
+    const handleFavouriteItem = (id) => {
+        favouriteItems.includes(id)
+            ? dispatch(removeFavouriteItem(id))
+            : dispatch(addFavouriteItem(id));
+    };
+
     return (
         <>
             <TextFilterElement searchKey={searchKey} handleChange={handleChange} />
@@ -107,9 +119,11 @@ const PictureListContainer = (props) => {
                 pending={listPending}
                 loadInBrowser={loadInBrowser}
                 loadModal={loadModal}
+                favouriteItems={favouriteItems}
+                handleFavouriteItem={handleFavouriteItem}
             />
         </>
     );
 };
 
-export default PictureListContainer;
+export default PicturesListContainer;

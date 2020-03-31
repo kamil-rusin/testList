@@ -1,40 +1,66 @@
-import React from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { useCallback } from 'react';
+import { ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Badge } from 'react-native-elements';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { determineImageStyle } from '../styles/styles';
 
 const PictureItemComponent = (props) => {
-    const { loadInBrowser, item, loadModal, isGridEnabled, imageResolution } = props;
+    const {
+        loadInBrowser,
+        item,
+        loadModal,
+        isGridEnabled,
+        imageResolution,
+        isFavourite,
+        handleFavouriteItem,
+    } = props;
+
+    const handleOnLongPress = useCallback(() => handleFavouriteItem(item.id), [
+        handleFavouriteItem,
+        item.id,
+    ]);
 
     return (
-        <View style={styles.listItem}>
-            <TouchableOpacity
-                onPress={() => {
-                    loadModal(item.download_url);
-                }}
-            >
-                <Image
-                    style={determineImageStyle(isGridEnabled, imageResolution)}
-                    source={{ uri: item.download_url }}
-                />
-            </TouchableOpacity>
+        <TouchableOpacity onLongPress={handleOnLongPress}>
+            <View style={styles.listItem}>
+                <TouchableOpacity
+                    onPress={() => {
+                        loadModal(item.download_url);
+                    }}
+                    onLongPress={handleOnLongPress}
+                >
+                    <ImageBackground
+                        style={determineImageStyle(isGridEnabled, imageResolution)}
+                        source={{ uri: item.download_url }}
+                    >
+                        {isFavourite && (
+                            <MaterialCommunityIcons
+                                size={18}
+                                name={'star'}
+                                color={'#ffd70a'}
+                                style={styles.starIcon}
+                            />
+                        )}
+                    </ImageBackground>
+                </TouchableOpacity>
 
-            {!isGridEnabled && (
-                <View style={styles.detailsContainer}>
-                    <View style={styles.row}>
-                        <Text style={styles.author}>{item.author}</Text>
-                        <Badge
-                            containerStyle={styles.badge}
-                            badgeStyle={styles.badgeStyle}
-                            value={item.id}
-                        />
+                {!isGridEnabled && (
+                    <View style={styles.detailsContainer}>
+                        <View style={styles.row}>
+                            <Text style={styles.author}>{item.author}</Text>
+                            <Badge
+                                containerStyle={styles.badge}
+                                badgeStyle={styles.badgeStyle}
+                                value={item.id}
+                            />
+                        </View>
+                        <Text onPress={() => loadInBrowser(item.url)} style={styles.website}>
+                            Url: {item.url}
+                        </Text>
                     </View>
-                    <Text onPress={() => loadInBrowser(item.url)} style={styles.website}>
-                        Url: {item.url}
-                    </Text>
-                </View>
-            )}
-        </View>
+                )}
+            </View>
+        </TouchableOpacity>
     );
 };
 
@@ -74,6 +100,11 @@ const styles = StyleSheet.create({
     website: {
         fontSize: 13,
         color: '#606060',
+    },
+    starIcon: {
+        position: 'absolute',
+        top: 0,
+        right: 0,
     },
 });
 
