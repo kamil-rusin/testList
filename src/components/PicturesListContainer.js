@@ -101,13 +101,9 @@ const PicturesListContainer = (props) => {
     };
 
     const handleFavouriteItem = (id) => {
-        let isIncluded = false;
-        for (let i = 0; i < favouriteItems.length; i++) {
-            if (favouriteItems[i] === id) {
-                isIncluded = true;
-            }
-        }
-        isIncluded ? dispatch(removeFavouriteItem(id)) : dispatch(addFavouriteItem(id));
+        favouriteItems.includes(id)
+            ? dispatch(removeFavouriteItem(id))
+            : dispatch(addFavouriteItem(id));
     };
 
     return (

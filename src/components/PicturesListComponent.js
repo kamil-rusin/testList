@@ -40,8 +40,7 @@ const PicturesListComponent = (props) => {
                 item={item}
                 loadModal={loadModal}
                 handleFavouriteItem={handleFavouriteItem}
-                isFavourite={true}
-                //TODO: change to isFavourite={favouriteItems.includes(item.id)}
+                isFavourite={favouriteItems.includes(item.id)}
             />
         ),
         [

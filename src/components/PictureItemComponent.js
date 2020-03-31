@@ -22,6 +22,7 @@ const PictureItemComponent = (props) => {
                     onPress={() => {
                         loadModal(item.download_url);
                     }}
+                    onLongPress={() => handleFavouriteItem(item.id)}
                 >
                     <ImageBackground
                         style={determineImageStyle(isGridEnabled, imageResolution)}
