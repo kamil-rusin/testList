@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Badge } from 'react-native-elements';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -15,14 +15,19 @@ const PictureItemComponent = (props) => {
         handleFavouriteItem,
     } = props;
 
+    const handleOnLongPress = useCallback(() => handleFavouriteItem(item.id), [
+        handleFavouriteItem,
+        item.id,
+    ]);
+
     return (
-        <TouchableOpacity onLongPress={() => handleFavouriteItem(item.id)}>
+        <TouchableOpacity onLongPress={handleOnLongPress}>
             <View style={styles.listItem}>
                 <TouchableOpacity
                     onPress={() => {
                         loadModal(item.download_url);
                     }}
-                    onLongPress={() => handleFavouriteItem(item.id)}
+                    onLongPress={handleOnLongPress}
                 >
                     <ImageBackground
                         style={determineImageStyle(isGridEnabled, imageResolution)}
