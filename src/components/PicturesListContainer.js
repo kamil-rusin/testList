@@ -25,6 +25,7 @@ const getFavouriteItems = (state) => state.listReducer.favouriteItems;
 
 const PicturesListContainer = (props) => {
     const [sort, setSort] = useState(false);
+    const [onlyFavourites, setOnlyFavourites] = useState(false);
     const isGridEnabled = useSelector(getIsGridEnabled);
     const searchKey = useSelector(getSearchKey);
     const dataToFilter = useSelector(getDataToFilter);
@@ -121,6 +122,7 @@ const PicturesListContainer = (props) => {
                 loadModal={loadModal}
                 favouriteItems={favouriteItems}
                 handleFavouriteItem={handleFavouriteItem}
+                onlyFavourites={onlyFavourites}
             />
         </>
     );
