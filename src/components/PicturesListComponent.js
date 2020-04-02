@@ -87,13 +87,13 @@ const PicturesListComponent = (props) => {
                 >
                     <Text style={styles.buttonTitle}>SORT BY AUTHOR</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.buttonContainer}>
-                    <Text
-                        style={styles.buttonTitle}
-                        onPress={() => {
-                            handleFavourites();
-                        }}
-                    >
+                <TouchableOpacity
+                    style={styles.buttonContainer}
+                    onPress={() => {
+                        handleFavourites();
+                    }}
+                >
+                    <Text style={styles.buttonTitle}>
                         {onlyFavourites ? 'SHOW ALL' : 'SHOW FAVOURITES'}
                     </Text>
                 </TouchableOpacity>

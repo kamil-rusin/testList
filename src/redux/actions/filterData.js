@@ -1,7 +1,9 @@
 import { updateFilteredData, updateSearchKey } from './actionCreators';
 
-const filterData = (searchKey, data, onlyFavourites, favouriteItems) => {
-    return (dispatch) => {
+const filterData = (searchKey, onlyFavourites) => {
+    return (dispatch, getState) => {
+        const { data, favouriteItems } = getState().listReducer;
+
         dispatch(updateSearchKey(searchKey));
 
         const results = data.filter((item) =>
