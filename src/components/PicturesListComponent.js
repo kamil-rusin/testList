@@ -28,6 +28,8 @@ const PicturesListComponent = (props) => {
         isGridEnabled,
         favouriteItems,
         handleFavouriteItem,
+        onlyFavourites,
+        handleFavourites,
     } = props;
     const imageResolution = useMemo(() => getImageResolution(), []);
 
@@ -88,6 +90,16 @@ const PicturesListComponent = (props) => {
                 <TouchableOpacity
                     style={styles.buttonContainer}
                     onPress={() => {
+                        handleFavourites();
+                    }}
+                >
+                    <Text style={styles.buttonTitle}>
+                        {onlyFavourites ? 'SHOW ALL' : 'SHOW FAVOURITES'}
+                    </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={styles.buttonContainer}
+                    onPress={() => {
                         sortDataByParam('id');
                         handleSort();
                     }}
@@ -110,8 +122,8 @@ const styles = StyleSheet.create({
         height: '8%',
     },
     buttonContainer: {
-        margin: 4,
-        width: '45%',
+        margin: 3,
+        width: '32%',
         backgroundColor: '#1e89de',
         borderRadius: 7,
         height: '80%',

@@ -16,7 +16,6 @@ import {
 } from '../redux/actions/actionCreators';
 
 const getSearchKey = (state) => state.listReducer.searchKey;
-const getDataToFilter = (state) => state.listReducer.data;
 const getListData = (state) => state.listReducer.filteredData;
 const getListPending = (state) => state.listReducer.pending;
 const getListError = (state) => state.listReducer.error;
@@ -25,9 +24,9 @@ const getFavouriteItems = (state) => state.listReducer.favouriteItems;
 
 const PicturesListContainer = (props) => {
     const [sort, setSort] = useState(false);
+    const [onlyFavourites, setOnlyFavourites] = useState(false);
     const isGridEnabled = useSelector(getIsGridEnabled);
     const searchKey = useSelector(getSearchKey);
-    const dataToFilter = useSelector(getDataToFilter);
     const listData = useSelector(getListData);
     const listPending = useSelector(getListPending);
     const listError = useSelector(getListError);
@@ -60,10 +59,15 @@ const PicturesListContainer = (props) => {
 
     const handleChange = useCallback(
         (text) => {
-            dispatch(filterDataAction(text, dataToFilter));
+            dispatch(filterDataAction(text, onlyFavourites));
         },
-        [dispatch, dataToFilter],
+        [dispatch, onlyFavourites],
     );
+
+    const handleFavourites = useCallback(() => {
+        dispatch(filterDataAction(searchKey, !onlyFavourites));
+        setOnlyFavourites(!onlyFavourites);
+    }, [dispatch, onlyFavourites, searchKey]);
 
     const fetchData = useCallback(() => {
         dispatch(fetchDataAction());
@@ -121,6 +125,9 @@ const PicturesListContainer = (props) => {
                 loadModal={loadModal}
                 favouriteItems={favouriteItems}
                 handleFavouriteItem={handleFavouriteItem}
+                onlyFavourites={onlyFavourites}
+                handleFavourites={handleFavourites}
+                setOnlyFavourites={setOnlyFavourites}
             />
         </>
     );
